@@ -4,12 +4,28 @@ import java.util.UUID;
 
 public class ToDo {
 
-    private String Id;
+    private String id;
     private String content;
     private boolean status;
 
+
     public ToDo() {
-        this.Id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
+        this.status = false;
+    }
+
+    public ToDo(String content) {
+        this.content = content;
+        this.id = UUID.randomUUID().toString();
+        this.status = false;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getContent() {
@@ -26,5 +42,10 @@ public class ToDo {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return ""+content+" "+status ;
     }
 }

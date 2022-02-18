@@ -18,4 +18,14 @@ public class RepoTodos {
         return toDos;
     }
 
+    public void addToDo(ToDo toDo){
+        toDos.add(toDo);
+    }
+
+    public ToDo listOneToDo(String id){
+        return toDos.stream()
+                .filter(t -> t.getId().equals(id))
+                .findFirst().orElse(null);
+    }
+
 }

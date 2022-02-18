@@ -17,4 +17,12 @@ public class ToDoService {
         return repoToDos.listAllToDos();
     }
 
+    public void add(ToDo toDo) {
+        repoToDos.addToDo(toDo);
+    }
+
+    public ToDo listOneToDo(String id) {
+        return repoToDos.listOneToDo(id);
+    }
+
 }
