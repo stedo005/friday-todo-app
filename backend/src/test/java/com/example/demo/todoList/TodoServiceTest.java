@@ -2,9 +2,11 @@ package com.example.demo.todoList;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -97,6 +99,22 @@ class TodoServiceTest {
         String actual = repo.toString();
 
         assertEquals("[Punkt 1, Punkt 3]", actual);
+
+    }
+
+    @Test
+    @DisplayName("Mockito delete 1 item")
+    void test4() {
+
+        TodoItem point1 = new TodoItem("Punkt 1");
+        TodoItem point2 = new TodoItem("Punkt 2");
+        TodoItem point3 = new TodoItem("Punkt 3");
+
+        RepoTodos mockedRepo = Mockito.mock(RepoTodos.class);
+
+        mockedRepo.deleteItem(point2.getId());
+
+        Mockito.verify(mockedRepo).deleteItem(point2.getId());
 
     }
 
