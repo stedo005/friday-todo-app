@@ -18,7 +18,10 @@ public class RepoTodos {
     }
 
     public void deleteItem(String idItem) {
-
+        TodoItem todoItemToDelete = todoItems.stream()
+                .filter(item -> item.getId().matches(idItem))
+                .findFirst().orElse(null);
+        todoItems.remove(todoItemToDelete);
     }
 
     public List<TodoItem> listAllItem() {
@@ -27,15 +30,13 @@ public class RepoTodos {
 
     public TodoItem listOneItem(String id) {
         return todoItems.stream()
-                .filter(t -> t.getId()
-                .matches(id))
+                .filter(t -> t.getId().matches(id))
                 .findFirst().orElse(null);
     }
 
     public void setStatusDone(String id) {
         todoItems.stream()
-                .filter(item -> item.getId()
-                .matches(id))
+                .filter(item -> item.getId().matches(id))
                 .findFirst().orElse(null)
                 .setStatus(true);
     }

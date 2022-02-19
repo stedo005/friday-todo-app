@@ -92,8 +92,9 @@ class TodoServiceTest {
         service.addItem(point2);
         service.addItem(point3);
 
+        service.deleteItem(point2.getId());
+
         String actual = repo.toString();
-        System.out.println(actual);
 
         assertEquals("[Punkt 1, Punkt 3]", actual);
 
