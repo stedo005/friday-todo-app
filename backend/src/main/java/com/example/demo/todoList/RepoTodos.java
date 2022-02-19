@@ -31,11 +31,4 @@ public class RepoTodos {
                 .findFirst().orElse(null);
     }
 
-    public void setStatusDone(String id) {
-        todoItems.stream()
-                .filter(item -> item.getId().matches(id))
-                .findFirst().orElse(null)
-                .setStatusDone(true);
-    }
-
 }
