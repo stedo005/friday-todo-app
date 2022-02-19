@@ -18,10 +18,7 @@ public class RepoTodos {
     }
 
     public void deleteItem(String idItem) {
-        TodoItem todoItemToDelete = todoItems.stream()
-                .filter(item -> item.getId().matches(idItem))
-                .findFirst().orElse(null);
-        todoItems.remove(todoItemToDelete);
+        todoItems.removeIf(item -> item.getId().matches(idItem));
     }
 
     public List<TodoItem> listAllItem() {
