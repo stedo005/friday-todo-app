@@ -30,7 +30,7 @@ public class TodoService {
     }
 
     public void setStatusDone(String id) {
-        repoTodos.setStatusDone(id);
+        listOneItem(id).setStatusDone(true);
     }
 
 }
