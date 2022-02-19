@@ -2,19 +2,19 @@ package com.example.demo.todoList;
 
 import java.util.UUID;
 
-public class ToDo {
+public class TodoItem {
 
     private String id;
     private String content;
     private boolean status;
 
 
-    public ToDo() {
+    public TodoItem() {
         this.id = UUID.randomUUID().toString();
         this.status = false;
     }
 
-    public ToDo(String content) {
+    public TodoItem(String content) {
         this.content = content;
         this.id = UUID.randomUUID().toString();
         this.status = false;
@@ -46,6 +46,7 @@ public class ToDo {
 
     @Override
     public String toString() {
-        return ""+content+" "+status ;
+        return content;
     }
+
 }

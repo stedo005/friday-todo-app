@@ -2,30 +2,42 @@ package com.example.demo.todoList;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class RepoTodos {
 
-    private List<ToDo> toDos;
+    private List<TodoItem> todoItems;
 
-    public RepoTodos(List<ToDo> toDos) {
-        this.toDos = toDos;
+    public RepoTodos(List<TodoItem> todoItems) {
+        this.todoItems = todoItems;
     }
 
-    public List<ToDo> listAllToDos() {
-        return toDos;
+    public void addItem(TodoItem todoItem) {
+        todoItems.add(todoItem);
     }
 
-    public void addToDo(ToDo toDo){
-        toDos.add(toDo);
+    public void deleteItem(String idItem) {
+
     }
 
-    public ToDo listOneToDo(String id){
-        return toDos.stream()
-                .filter(t -> t.getId().equals(id))
+    public List<TodoItem> listAllItem() {
+        return todoItems;
+    }
+
+    public TodoItem listOneItem(String id) {
+        return todoItems.stream()
+                .filter(t -> t.getId()
+                .matches(id))
                 .findFirst().orElse(null);
+    }
+
+    public void setStatusDone(String id) {
+        todoItems.stream()
+                .filter(item -> item.getId()
+                .matches(id))
+                .findFirst().orElse(null)
+                .setStatus(true);
     }
 
 }
