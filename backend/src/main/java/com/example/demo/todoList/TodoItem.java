@@ -20,6 +20,12 @@ public class TodoItem {
         this.statusDone = false;
     }
 
+    public TodoItem(String id, String content, boolean statusDone) {
+        this.id = id;
+        this.content = content;
+        this.statusDone = statusDone;
+    }
+
     public String getId() {
         return id;
     }

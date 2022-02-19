@@ -118,4 +118,18 @@ class TodoServiceTest {
 
     }
 
+    @Test
+    @DisplayName("Mockito get 1 Item")
+    void test5() {
+
+        RepoTodos mockedRepo = Mockito.mock(RepoTodos.class);
+        Mockito.when(mockedRepo.listOneItem("1234"))
+                .thenReturn(new TodoItem());
+
+        TodoService service = new TodoService(mockedRepo);
+        TodoItem actual = service.listOneItem("1234");
+        assertNotNull(actual);
+
+    }
+
 }
