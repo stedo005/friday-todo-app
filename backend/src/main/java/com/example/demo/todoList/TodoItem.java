@@ -8,16 +8,12 @@ public class TodoItem {
     private String content;
     private boolean statusDone;
 
-
     public TodoItem() {
-        this.id = UUID.randomUUID().toString();
-        this.statusDone = false;
+        this("");
     }
 
     public TodoItem(String content) {
-        this.content = content;
-        this.id = UUID.randomUUID().toString();
-        this.statusDone = false;
+        this(UUID.randomUUID().toString(), content, false);
     }
 
     public TodoItem(String id, String content, boolean statusDone) {
