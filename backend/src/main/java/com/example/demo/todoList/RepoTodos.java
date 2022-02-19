@@ -38,7 +38,7 @@ public class RepoTodos {
         todoItems.stream()
                 .filter(item -> item.getId().matches(id))
                 .findFirst().orElse(null)
-                .setStatus(true);
+                .setStatusDone(true);
     }
 
 }

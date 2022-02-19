@@ -6,18 +6,18 @@ public class TodoItem {
 
     private String id;
     private String content;
-    private boolean status;
+    private boolean statusDone;
 
 
     public TodoItem() {
         this.id = UUID.randomUUID().toString();
-        this.status = false;
+        this.statusDone = false;
     }
 
     public TodoItem(String content) {
         this.content = content;
         this.id = UUID.randomUUID().toString();
-        this.status = false;
+        this.statusDone = false;
     }
 
     public String getId() {
@@ -36,12 +36,12 @@ public class TodoItem {
         this.content = content;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isStatusDone() {
+        return statusDone;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setStatusDone(boolean statusDone) {
+        this.statusDone = statusDone;
     }
 
     @Override

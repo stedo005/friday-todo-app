@@ -56,7 +56,7 @@ class TodoServiceTest {
     }
 
     @Test
-    @DisplayName("should set todoItemStatus true")
+    @DisplayName("should set statusDone true")
     void test2() {
 
         TodoItem point1 = new TodoItem("Punkt 1");
@@ -73,7 +73,7 @@ class TodoServiceTest {
         service.addItem(point3);
 
         service.setStatusDone(point1.getId());
-        boolean actual = point1.isStatus();
+        boolean actual = point1.isStatusDone();
         assertTrue(actual);
 
     }
