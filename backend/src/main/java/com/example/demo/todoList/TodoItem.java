@@ -9,8 +9,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class TodoItem {
 
-    private String id;
-    private String content;
+    private String id = UUID.randomUUID().toString();
+    private String content = "";
     private boolean statusDone;
 
 }
