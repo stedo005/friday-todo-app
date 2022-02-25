@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import todoOverview from "./TodoOverview";
+import TodoOverview from "./TodoOverview";
 
 function App() {
 
     const [greeting, setGreeting] = useState('')
 
     useEffect(() => {
-        fetch('/api/greeting', {
+        fetch('http://localhost:8080/todo-app/listAllItem', {
             method: 'GET',
             headers: {
-                'Accept': 'text/plain'
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.text())
@@ -18,7 +20,12 @@ function App() {
 
     return (
         <div>
-            {greeting}
+            <div>
+                {greeting}
+            </div>
+            <div>
+                < TodoOverview />
+            </div>
         </div>
     );
 }
