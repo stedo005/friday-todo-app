@@ -47,11 +47,7 @@ export default function TodoOverview () {
             .then(() => setIdToSetDone(""))
     }
 
-    useEffect(() => {
-        fetch(`http://localhost:8080/todo-app/listAllItem`)
-            .then((response) => {return response.json()})
-            .then((responseBody: Array<Todos>) => {setData(responseBody)})
-    }, [])
+    useEffect(() => {fetching()}, [])
 
     return(
         <div>
