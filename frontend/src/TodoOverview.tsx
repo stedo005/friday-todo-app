@@ -11,7 +11,7 @@ export default function TodoOverview () {
     const [data, setData] = useState([] as Array<Todos>);
     const requestBody = {"content":contentInput}
 
-    const fetching = () => {
+    const fetchAll = () => {
         fetch(`http://localhost:8080/todo-app/listAllItem`)
             .then(response => {return response.json()})
             .then((responseBody: Array<Todos>) => {setData(responseBody)})
@@ -26,7 +26,7 @@ export default function TodoOverview () {
                 "Content-Type": "application/json"
             }
         })
-            .then(fetching)
+            .then(fetchAll)
             .then(() => setContentInput(""))
     }
 
@@ -34,7 +34,7 @@ export default function TodoOverview () {
         fetch( `http://localhost:8080/todo-app/${idToDelete}`, {
             method: "DELETE"
         })
-            .then(fetching)
+            .then(fetchAll)
             .then(() => setIdToDelete(""))
 
     }
@@ -43,11 +43,11 @@ export default function TodoOverview () {
         fetch(`http://localhost:8080/todo-app/${idToSetDone}`, {
             method: "PUT"
         })
-            .then(fetching)
+            .then(fetchAll)
             .then(() => setIdToSetDone(""))
     }
 
-    useEffect(() => {fetching()}, [])
+    useEffect(() => {fetchAll()}, [])
 
     return(
         <div>
