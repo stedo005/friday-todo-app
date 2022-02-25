@@ -1,12 +1,21 @@
+import "./TodoItem.css"
 import {Todos} from "./model"
 
 export default function TodoItem(props: Todos) {
 
+    function state(state: boolean) {
+        if (!state) {
+            return "nicht erledigt"
+        } else {
+            return "erledigt"
+        }
+    }
+
     return(
-        <div>
+        <div className="item-outer">
             <div>{props.id}</div>
             <div>{props.content}</div>
-            <div>{props.statusDone}</div>
+            <div>{state(props.statusDone)}</div>
         </div>
     )
 

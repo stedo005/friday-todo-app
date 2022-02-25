@@ -4,7 +4,7 @@ import TodoOverview from "./TodoOverview";
 
 function App() {
 
-    const [greeting, setGreeting] = useState('')
+/*    const [greeting, setGreeting] = useState('')
 
     useEffect(() => {
         fetch('http://localhost:8080/todo-app/listAllItem', {
@@ -16,13 +16,13 @@ function App() {
             .then(response => response.text())
             .then(text => setGreeting(text))
             .catch(err => setGreeting('Da ist etwas schief gelaufen'));
-    }, []);
+    }, []);*/
 
     return (
         <div>
-            <div>
-                {greeting}
-            </div>
+ {/*           <div>
+                //{greeting}
+            </div>*/}
             <div>
                 < TodoOverview />
             </div>

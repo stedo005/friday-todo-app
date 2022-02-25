@@ -1,0 +1,11 @@
+body{
+    background-color: #e3bbc9;
+}
+
+.item-outer{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: hotpink;
+    border-style: solid;
+    margin: 10px;
+}
