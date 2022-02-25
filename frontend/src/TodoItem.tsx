@@ -4,13 +4,20 @@ import {useEffect, useState} from "react";
 
 export default function TodoItem(props: Todos) {
 
-    const idItem = props.id
+    let data =[] as Array<Todos>;
+
+    const fetchAll = () => {
+        fetch(`http://localhost:8080/todo-app/listAllItem`)
+            .then(response => {return response.json()})
+            .then((responseBody) => {data = responseBody})
+    }
 
     const deleteItem = () => {
-        fetch( `http://localhost:8080/todo-app/${idItem}`, {
+        fetch( `http://localhost:8080/todo-app/${props.id}`, {
             method: "DELETE"
         })
             .then(() => console.log("läuft"))
+            .then(fetchAll)
     }
 
     return(
