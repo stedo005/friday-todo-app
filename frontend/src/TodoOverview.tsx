@@ -2,14 +2,14 @@ import TodoItem from "./TodoItem"
 import {Todos} from "./model";
 import {useEffect, useState} from "react";
 
-export default function TodoOverview () {
+const TodoOverview = () => {
 
     const [contentInput, setContentInput] = useState('');
     const [idToDelete, setIdToDelete] = useState('');
-    const [idToSetDone, setIdToSetDone] = useState('')
-    const [search, setSearch] = useState('')
+    const [idToSetDone, setIdToSetDone] = useState('');
+    const [search, setSearch] = useState('');
     const [data, setData] = useState([] as Array<Todos>);
-    const requestBody = {"content":contentInput}
+    const requestBody = {"content":contentInput};
 
     const fetchAll = () => {
         fetch(`http://localhost:8080/todo-app/listAllItem`)
@@ -78,3 +78,5 @@ export default function TodoOverview () {
         </div>
     )
 }
+
+export default TodoOverview;

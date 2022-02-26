@@ -1,23 +1,15 @@
 import "./TodoItem.css"
 import {Todos} from "./model"
+import TodoOverview from "./TodoOverview";
 import {useEffect, useState} from "react";
 
-export default function TodoItem(props: Todos) {
-
-    let data =[] as Array<Todos>;
-
-    const fetchAll = () => {
-        fetch(`http://localhost:8080/todo-app/listAllItem`)
-            .then(response => {return response.json()})
-            .then((responseBody) => {data = responseBody})
-    }
+const TodoItem = (props: Todos) => {
 
     const deleteItem = () => {
         fetch( `http://localhost:8080/todo-app/${props.id}`, {
             method: "DELETE"
         })
-            .then(() => console.log("läuft"))
-            .then(fetchAll)
+            .then(() => console.log("gelöscht"))
     }
 
     return(
@@ -38,3 +30,5 @@ export default function TodoItem(props: Todos) {
     }
 
 }
+
+export default TodoItem;
