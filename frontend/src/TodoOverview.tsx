@@ -5,8 +5,6 @@ import {useEffect, useState} from "react";
 const TodoOverview = () => {
 
     const [contentInput, setContentInput] = useState('');
-    const [idToDelete, setIdToDelete] = useState('');
-    const [idToSetDone, setIdToSetDone] = useState('');
     const [search, setSearch] = useState('');
     const [data, setData] = useState([] as Array<Todos>);
     const requestBody = {"content":contentInput};
@@ -30,41 +28,17 @@ const TodoOverview = () => {
             .then(() => setContentInput(""))
     }
 
-    const deleteItem = () => {
-        fetch( `http://localhost:8080/todo-app/${idToDelete}`, {
-            method: "DELETE"
-        })
-            .then(fetchAll)
-            .then(() => setIdToDelete(""))
-
-    }
-
-    const setDone = () => {
-        fetch(`http://localhost:8080/todo-app/${idToSetDone}`, {
-            method: "PUT"
-        })
-            .then(fetchAll)
-            .then(() => setIdToSetDone(""))
-    }
-
     useEffect(() => {fetchAll()}, [])
 
     return(
         <div>
             <div>
-                <input type="text" placeholder="Aufgabe eingeben" value={contentInput} onChange={(ev) => setContentInput(ev.target.value)}/>
+                <input type="text" placeholder="Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)}/>
                 <button onClick={addItem}>Neue Aufgabe estellen</button>
             </div>
             <div>
-                <input type="text" placeholder="ID" value={idToDelete} onChange={value => setIdToDelete(value.target.value)}/>
-                <button onClick={deleteItem}>Aufgabe löschen</button>
-            </div>
-            <div>
-                <input type="text" placeholder="ID" value={idToSetDone} onChange={value => setIdToSetDone(value.target.value)}/>
-                <button onClick={setDone} >Aufgabe erledigt</button>
-            </div>
-            <div>
-                <input type="text" placeholder="Suche" value={search} onChange={value => setSearch(value.target.value)}/>
+                <label htmlFor="search">nach Aufgabe suchen:</label>
+                <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
             <div>
                 {
@@ -72,7 +46,7 @@ const TodoOverview = () => {
                     ? data
                         .filter(e => e.content.toLowerCase().includes(search.toLowerCase()))
                         .map((e) => <TodoItem key={e.id} content={e.content} id={e.id} statusDone={e.statusDone} onItemChange={fetchAll}/>)
-                    : <div>Noch nicht fertig</div>
+                    : <div>Alles erledigt.</div>
                 }
             </div>
         </div>

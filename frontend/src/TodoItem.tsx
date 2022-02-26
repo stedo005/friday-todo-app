@@ -15,10 +15,9 @@ const TodoItem = (props: Todos) => {
 
     return(
         <div className="item-outer">
-
             <div>Aufgabe: {props.content}</div>
             <div>Status: {state(props.statusDone)}</div>
-            <button onClick={deleteItem}>löschen</button> <button onClick={setStatusDone} disabled={props.statusDone}>erledigt</button>
+            <button onClick={deleteItem}>löschen</button> <button onClick={setStatusDone} hidden={props.statusDone}>erledigt</button>
         </div>
     )
 
