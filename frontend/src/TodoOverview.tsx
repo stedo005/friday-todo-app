@@ -71,7 +71,7 @@ const TodoOverview = () => {
                     data.length > 0
                     ? data
                         .filter(e => e.content.toLowerCase().includes(search.toLowerCase()))
-                        .map((e) => <TodoItem key={e.id} content={e.content} id={e.id} statusDone={e.statusDone}/>)
+                        .map((e) => <TodoItem key={e.id} content={e.content} id={e.id} statusDone={e.statusDone} onItemChange={fetchAll}/>)
                     : <div>Noch nicht fertig</div>
                 }
             </div>

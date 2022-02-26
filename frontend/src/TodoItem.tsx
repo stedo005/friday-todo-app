@@ -1,23 +1,24 @@
 import "./TodoItem.css"
 import {Todos} from "./model"
-import TodoOverview from "./TodoOverview";
-import {useEffect, useState} from "react";
 
 const TodoItem = (props: Todos) => {
 
     const deleteItem = () => {
-        fetch( `http://localhost:8080/todo-app/${props.id}`, {
-            method: "DELETE"
-        })
-            .then(() => console.log("gelöscht"))
+        fetch( `http://localhost:8080/todo-app/${props.id}`, {method: "DELETE"})
+            .then(response => props.onItemChange())
+    }
+
+    const setStatusDone = () => {
+        fetch(`http://localhost:8080/todo-app/${props.id}`,{method: "PUT"})
+            .then(response => props.onItemChange())
     }
 
     return(
         <div className="item-outer">
-            <div>{props.id}</div>
+
             <div>Aufgabe: {props.content}</div>
             <div>Status: {state(props.statusDone)}</div>
-            <button onClick={deleteItem}>löschen</button>
+            <button onClick={deleteItem}>löschen</button> <button onClick={setStatusDone} disabled={props.statusDone}>erledigt</button>
         </div>
     )
 
