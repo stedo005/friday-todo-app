@@ -17,15 +17,16 @@ const TodoItem = (props: Todos) => {
         <div className="item-outer">
             <div>Aufgabe: {props.content}</div>
             <div>Status: {state(props.statusDone)}</div>
-            <button onClick={deleteItem}>löschen</button> <button onClick={setStatusDone} hidden={props.statusDone}>erledigt</button>
+            <button onClick={deleteItem}>löschen</button>
+            <button onClick={setStatusDone} hidden={props.statusDone}>erledigt</button>
         </div>
     )
 
     function state(state: boolean) {
         if (!state) {
-            return "nicht erledigt"
+            return "noch nich fertsch"
         } else {
-            return "erledigt"
+            return "fertsch"
         }
     }
 

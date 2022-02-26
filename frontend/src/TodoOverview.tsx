@@ -1,6 +1,8 @@
 import TodoItem from "./TodoItem"
 import {Todos} from "./model";
 import {useEffect, useState} from "react";
+import "./TodoOverview.css";
+import plus from "./img/plus-icon.png";
 
 const TodoOverview = () => {
 
@@ -32,15 +34,15 @@ const TodoOverview = () => {
 
     return(
         <div>
-            <div>
-                <input type="text" placeholder="Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)}/>
-                <button onClick={addItem}>Neue Aufgabe estellen</button>
+            <div className="input-field">
+                <div onClick={addItem} className="sim-btn"><img src={plus} height={30} alt="plus"/></div>
+                <div><input type="text" placeholder="Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)}/></div>
             </div>
-            <div>
-                <label htmlFor="search">nach Aufgabe suchen:</label>
+            <div className="input-field">
+                <div>nach Aufgabe suchen: </div>
                 <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
-            <div>
+            <div className="input-field">
                 {
                     data.length > 0
                     ? data
