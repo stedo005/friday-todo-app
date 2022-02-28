@@ -3,20 +3,20 @@ body{
     background-color: #e3bbc9;
 }
 
-.item-outer-done{
+.item-outer-done, .item-outer-inProgress{
     padding: 10px;
     border-radius: 10px;
-    background-color: #60fd01;
+    transition: background-color 0.5s;
     border-style: solid;
     margin: 10px;
     min-width: 250px;
+    box-shadow: 3px 3px 5px dimgray;
+}
+
+.item-outer-done{
+    background-color: #60fd01;
 }
 
 .item-outer-inProgress{
-    padding: 10px;
-    border-radius: 10px;
     background-color: hotpink;
-    border-style: solid;
-    margin: 10px;
-    min-width: 250px;
 }
