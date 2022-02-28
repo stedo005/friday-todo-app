@@ -3,7 +3,16 @@ body{
     background-color: #e3bbc9;
 }
 
-.item-outer{
+.item-outer-done{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #60fd01;
+    border-style: solid;
+    margin: 10px;
+    min-width: 250px;
+}
+
+.item-outer-inProgress{
     padding: 10px;
     border-radius: 10px;
     background-color: hotpink;

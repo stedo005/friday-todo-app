@@ -19,7 +19,7 @@ const TodoItem = (props: TodoItemProps) => {
     }
 
     return(
-        <div className="item-outer">
+        <div className={props.todo.statusDone ? 'item-outer-done' : 'item-outer-inProgress'}>
             <div>Aufgabe: {props.todo.content}</div>
             <div>Status: {props.todo.statusDone ? "fertsch" : "nich fertsch"}</div>
             <button onClick={deleteItem}>löschen</button>

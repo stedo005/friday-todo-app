@@ -25,6 +25,11 @@ public class TodoController {
         todoService.deleteItem(idItem);
     }
 
+    @DeleteMapping("/deleteAllDone")
+    public void deleteAllDone() {
+        todoService.deleteAllDone();
+    }
+
     @PutMapping("/{idItem}")
     public void setStatusDone(@PathVariable String idItem) {
         todoService.setStatusDone(idItem);

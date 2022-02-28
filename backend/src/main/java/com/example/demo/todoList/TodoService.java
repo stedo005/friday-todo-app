@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Service
 public class TodoService {
 
-    private RepoTodos repoTodos;
+    private final RepoTodos repoTodos;
 
     public TodoService(RepoTodos repoTodos) {
         this.repoTodos = repoTodos;
@@ -23,7 +23,14 @@ public class TodoService {
         repoTodos.deleteItem(idItem);
     }
 
-
+    public void deleteAllDone() {
+        List<TodoItem> doneItem = repoTodos.listAllItem().stream()
+                .filter(e -> e.isStatusDone())
+                .toList();
+        for (int i = 0; i < doneItem.size(); i++) {
+            repoTodos.deleteItem(doneItem.get(i).getId());
+        }
+    }
 
     public List<TodoItem> listAllItem() {
         return repoTodos.listAllItem();
@@ -32,7 +39,7 @@ public class TodoService {
     public List<TodoItem> listAllDoneItem() {
         return repoTodos.listAllItem().stream()
                 .filter(e -> e.isStatusDone())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public TodoItem listOneItem(String id) {

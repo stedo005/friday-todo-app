@@ -36,6 +36,13 @@ const TodoOverview = () => {
             .then((responseBody: Array<Todo>) => {setData((responseBody))})
     }
 
+    const deleteAllDone = () => {
+        fetch('http://localhost:8080/todo-app/deleteAllDone', {
+            method: "DELETE"
+        })
+            .then(fetchAll)
+    }
+
     useEffect(() => {fetchAll()}, [])
 
     return(
@@ -50,6 +57,7 @@ const TodoOverview = () => {
             </div>
             <div className="input-field">
                 <button onClick={listAllDone}>zeige alle mit Status fertsch</button>
+                <button onClick={deleteAllDone}>lösche alle mit Status fertsch</button>
             </div>
             <div className="input-field">
                 <button onClick={fetchAll}>zeige alle</button>
