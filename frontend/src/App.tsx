@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import todoOverview from "./TodoOverview";
+import React from 'react';
 import TodoOverview from "./TodoOverview";
 
 function App() {

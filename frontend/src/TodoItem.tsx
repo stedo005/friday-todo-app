@@ -13,6 +13,14 @@ const TodoItem = (props: Todos) => {
             .then(response => props.onItemChange())
     }
 
+    function state(state: boolean) {
+        if (!state) {
+            return "noch nich fertsch"
+        } else {
+            return "fertsch"
+        }
+    }
+
     return(
         <div className="item-outer">
             <div>Aufgabe: {props.content}</div>
@@ -22,13 +30,6 @@ const TodoItem = (props: Todos) => {
         </div>
     )
 
-    function state(state: boolean) {
-        if (!state) {
-            return "noch nich fertsch"
-        } else {
-            return "fertsch"
-        }
-    }
 
 }
 
