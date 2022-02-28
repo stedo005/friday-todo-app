@@ -1,12 +1,12 @@
 package com.example.demo.todoList;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,9 +16,13 @@ class TodoServiceTest {
     @DisplayName("should return Objects in repo")
     void test() {
 
-        TodoItem point1 = new TodoItem("Punkt 1");
-        TodoItem point2 = new TodoItem("Punkt 2");
-        TodoItem point3 = new TodoItem("Punkt 3");
+        TodoItem point1 = new TodoItem();
+        TodoItem point2 = new TodoItem();
+        TodoItem point3 = new TodoItem();
+
+        point1.setContent("Punkt 1");
+        point2.setContent("Punkt 2");
+        point3.setContent("Punkt 3");
 
         List<TodoItem> repo = new ArrayList<>();
         repo.add(point1);
@@ -38,9 +42,13 @@ class TodoServiceTest {
     @DisplayName("should return searched todoItem")
     void test1() {
 
-        TodoItem point1 = new TodoItem("Punkt 1");
-        TodoItem point2 = new TodoItem("Punkt 2");
-        TodoItem point3 = new TodoItem("Punkt 3");
+        TodoItem point1 = new TodoItem();
+        TodoItem point2 = new TodoItem();
+        TodoItem point3 = new TodoItem();
+
+        point1.setContent("Punkt 1");
+        point2.setContent("Punkt 2");
+        point3.setContent("Punkt 3");
 
         List<TodoItem> repo = new ArrayList<>();
 
@@ -61,9 +69,13 @@ class TodoServiceTest {
     @DisplayName("should set statusDone true")
     void test2() {
 
-        TodoItem point1 = new TodoItem("Punkt 1");
-        TodoItem point2 = new TodoItem("Punkt 2");
-        TodoItem point3 = new TodoItem("Punkt 3");
+        TodoItem point1 = new TodoItem();
+        TodoItem point2 = new TodoItem();
+        TodoItem point3 = new TodoItem();
+
+        point1.setContent("Punkt 1");
+        point2.setContent("Punkt 2");
+        point3.setContent("Punkt 3");
 
         List<TodoItem> repo = new ArrayList<>();
 
@@ -84,9 +96,14 @@ class TodoServiceTest {
     @DisplayName("should delete 1 todoItem")
     void test3() {
 
-        TodoItem point1 = new TodoItem("Punkt 1");
-        TodoItem point2 = new TodoItem("Punkt 2");
-        TodoItem point3 = new TodoItem("Punkt 3");
+        TodoItem point1 = new TodoItem();
+        TodoItem point2 = new TodoItem();
+        TodoItem point3 = new TodoItem();
+
+        point1.setContent("Punkt 1");
+        point2.setContent("Punkt 2");
+        point3.setContent("Punkt 3");
+
         List<TodoItem> repo = new ArrayList<>();
         RepoTodos repoTodos = new RepoTodos(repo);
         TodoService service = new TodoService(repoTodos);
@@ -96,9 +113,9 @@ class TodoServiceTest {
 
         service.deleteItem(point2.getId());
 
-        String actual = repo.toString();
+        List<TodoItem> actual = repo;
 
-        assertEquals("[Punkt 1, Punkt 3]", actual);
+        Assertions.assertThat(actual).doesNotContain(point2);
 
     }
 
@@ -106,9 +123,13 @@ class TodoServiceTest {
     @DisplayName("Mockito delete 1 item")
     void test4() {
 
-        TodoItem point1 = new TodoItem("Punkt 1");
-        TodoItem point2 = new TodoItem("Punkt 2");
-        TodoItem point3 = new TodoItem("Punkt 3");
+        TodoItem point1 = new TodoItem();
+        TodoItem point2 = new TodoItem();
+        TodoItem point3 = new TodoItem();
+
+        point1.setContent("Punkt 1");
+        point2.setContent("Punkt 2");
+        point3.setContent("Punkt 3");
 
         RepoTodos mockedRepo = Mockito.mock(RepoTodos.class);
 
