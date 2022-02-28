@@ -7,7 +7,7 @@ import java.util.List;
 @Repository
 public class RepoTodos {
 
-    private List<TodoItem> todoItems;
+    private final List<TodoItem> todoItems;
 
     public RepoTodos(List<TodoItem> todoItems) {
         this.todoItems = todoItems;

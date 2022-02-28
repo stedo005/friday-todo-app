@@ -2,7 +2,9 @@ package com.example.demo.todoList;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TodoService {
@@ -21,8 +23,16 @@ public class TodoService {
         repoTodos.deleteItem(idItem);
     }
 
+
+
     public List<TodoItem> listAllItem() {
         return repoTodos.listAllItem();
+    }
+
+    public List<TodoItem> listAllDoneItem() {
+        return repoTodos.listAllItem().stream()
+                .filter(e -> e.isStatusDone())
+                .collect(Collectors.toList());
     }
 
     public TodoItem listOneItem(String id) {

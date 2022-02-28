@@ -6,9 +6,9 @@ import {Todo} from "./model";
 
 const TodoOverview = () => {
 
+    const [data, setData] = useState([] as Array<Todo>);
     const [contentInput, setContentInput] = useState('');
     const [search, setSearch] = useState('');
-    const [data, setData] = useState([] as Array<Todo>);
     const requestBody = {"content":contentInput};
 
     const fetchAll = () => {
@@ -30,6 +30,12 @@ const TodoOverview = () => {
             .then(() => setContentInput(""))
     }
 
+    const listAllDone = () => {
+        fetch('http://localhost:8080/todo-app/listAllDoneItem')
+            .then(response => {return response.json()})
+            .then((responseBody: Array<Todo>) => {setData((responseBody))})
+    }
+
     useEffect(() => {fetchAll()}, [])
 
     return(
@@ -41,6 +47,12 @@ const TodoOverview = () => {
             <div className="input-field">
                 <div>nach Aufgabe suchen: </div>
                 <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
+            </div>
+            <div className="input-field">
+                <button onClick={listAllDone}>zeige alle mit Status fertsch</button>
+            </div>
+            <div className="input-field">
+                <button onClick={fetchAll}>zeige alle</button>
             </div>
             <div className="input-field">
                 {
