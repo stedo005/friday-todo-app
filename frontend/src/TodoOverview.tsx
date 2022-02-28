@@ -1,20 +1,20 @@
 import TodoItem from "./TodoItem"
-import {Todos} from "./model";
 import {useEffect, useState} from "react";
 import "./TodoOverview.css";
 import plus from "./img/plus-icon.png";
+import {Todo} from "./model";
 
 const TodoOverview = () => {
 
     const [contentInput, setContentInput] = useState('');
     const [search, setSearch] = useState('');
-    const [data, setData] = useState([] as Array<Todos>);
+    const [data, setData] = useState([] as Array<Todo>);
     const requestBody = {"content":contentInput};
 
     const fetchAll = () => {
         fetch(`http://localhost:8080/todo-app/listAllItem`)
             .then(response => {return response.json()})
-            .then((responseBody: Array<Todos>) => {setData(responseBody)})
+            .then((responseBody: Array<Todo>) => {setData(responseBody)})
     }
 
     // Erstellt neues TodoItem
@@ -47,7 +47,7 @@ const TodoOverview = () => {
                     data.length > 0
                     ? data
                         .filter(e => e.content.toLowerCase().includes(search.toLowerCase()))
-                        .map((e) => <TodoItem key={e.id} content={e.content} id={e.id} statusDone={e.statusDone} onItemChange={fetchAll}/>)
+                        .map(e => <TodoItem key={e.id} todo={e} onItemChange={fetchAll}/>)
                     : <div>Alles erledigt.</div>
                 }
             </div>

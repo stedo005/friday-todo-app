@@ -30,7 +30,11 @@ public class TodoService {
     }
 
     public void setStatusDone(String id) {
-        listOneItem(id).setStatusDone(true);
+        if (repoTodos.listOneItem(id).isStatusDone() == false) {
+            listOneItem(id).setStatusDone(true);
+        } else {
+            listOneItem(id).setStatusDone(false);
+        }
     }
 
 }

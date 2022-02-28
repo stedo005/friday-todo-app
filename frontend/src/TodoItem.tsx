@@ -1,35 +1,31 @@
 import "./TodoItem.css"
-import {Todos} from "./model"
+import {Todo} from "./model";
 
-const TodoItem = (props: Todos) => {
+interface TodoItemProps {
+    todo: Todo
+    onItemChange: () => void
+}
+
+const TodoItem = (props: TodoItemProps) => {
 
     const deleteItem = () => {
-        fetch( `http://localhost:8080/todo-app/${props.id}`, {method: "DELETE"})
-            .then(response => props.onItemChange())
+        fetch( `http://localhost:8080/todo-app/${props.todo.id}`, {method: "DELETE"})
+            .then(() => props.onItemChange())
     }
 
     const setStatusDone = () => {
-        fetch(`http://localhost:8080/todo-app/${props.id}`,{method: "PUT"})
-            .then(response => props.onItemChange())
-    }
-
-    function state(state: boolean) {
-        if (!state) {
-            return "noch nich fertsch"
-        } else {
-            return "fertsch"
-        }
+        fetch(`http://localhost:8080/todo-app/${props.todo.id}`,{method: "PUT"})
+            .then(() => props.onItemChange())
     }
 
     return(
         <div className="item-outer">
-            <div>Aufgabe: {props.content}</div>
-            <div>Status: {state(props.statusDone)}</div>
+            <div>Aufgabe: {props.todo.content}</div>
+            <div>Status: {props.todo.statusDone ? "fertsch" : "nich fertsch"}</div>
             <button onClick={deleteItem}>löschen</button>
-            <button onClick={setStatusDone} hidden={props.statusDone}>erledigt</button>
+            <button onClick={setStatusDone}>toggle Status</button>
         </div>
     )
-
 
 }
 
