@@ -12,14 +12,14 @@ const TodoOverview = () => {
     const requestBody = {"content":contentInput};
 
     const fetchAll = () => {
-        fetch(`http://localhost:8080/todo-app/listAllItem`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
             .then(response => {return response.json()})
             .then((responseBody: Array<Todo>) => {setData(responseBody)})
     }
 
     // Erstellt neues TodoItem
     const addItem = () => {
-        fetch(`http://localhost:8080/todo-app`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app`, {
             method: "POST",
             body: JSON.stringify(requestBody),
             headers: {
@@ -31,13 +31,13 @@ const TodoOverview = () => {
     }
 
     const listAllDone = () => {
-        fetch('http://localhost:8080/todo-app/listAllDoneItem')
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllDoneItem`)
             .then(response => {return response.json()})
             .then((responseBody: Array<Todo>) => {setData((responseBody))})
     }
 
     const deleteAllDone = () => {
-        fetch('http://localhost:8080/todo-app/deleteAllDone', {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/deleteAllDone`, {
             method: "DELETE"
         })
             .then(fetchAll)

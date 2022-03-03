@@ -9,12 +9,12 @@ interface TodoItemProps {
 const TodoItem = (props: TodoItemProps) => {
 
     const deleteItem = () => {
-        fetch( `http://localhost:8080/todo-app/${props.todo.id}`, {method: "DELETE"})
+        fetch( `${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {method: "DELETE"})
             .then(() => props.onItemChange())
     }
 
     const setStatusDone = () => {
-        fetch(`http://localhost:8080/todo-app/${props.todo.id}`,{method: "PUT"})
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`,{method: "PUT"})
             .then(() => props.onItemChange())
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoOverview from "./TodoOverview";
 
-function App() {
+const App = () => {
 
     return (
         <div>
