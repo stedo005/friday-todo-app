@@ -9,7 +9,7 @@ import java.util.List;
 @CrossOrigin
 public class TodoController {
 
-    private TodoService todoService;
+    private final TodoService todoService;
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
@@ -25,6 +25,11 @@ public class TodoController {
         todoService.deleteItem(idItem);
     }
 
+    @DeleteMapping("/deleteAllDone")
+    public void deleteAllDone() {
+        todoService.deleteAllDone();
+    }
+
     @PutMapping("/{idItem}")
     public void setStatusDone(@PathVariable String idItem) {
         todoService.setStatusDone(idItem);
@@ -33,6 +38,11 @@ public class TodoController {
     @GetMapping("/listAllItem")
     public List<TodoItem> listAllItem() {
         return todoService.listAllItem();
+    }
+
+    @GetMapping("/listAllDoneItem")
+    public List<TodoItem> listAllDone() {
+        return todoService.listAllDoneItem();
     }
 
     @GetMapping("{idItem}")

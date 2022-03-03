@@ -1,35 +1,36 @@
 import "./TodoItem.css"
-import {Todos} from "./model"
+import {Todo} from "./model";
+import {useTranslation} from "react-i18next";
 
-const TodoItem = (props: Todos) => {
+interface TodoItemProps {
+    todo: Todo
+    onItemChange: () => void
+}
+
+const TodoItem = (props: TodoItemProps) => {
+
+    const { t } = useTranslation();
 
     const deleteItem = () => {
-        fetch( `http://localhost:8080/todo-app/${props.id}`, {method: "DELETE"})
-            .then(response => props.onItemChange())
+        fetch( `${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {method: "DELETE"})
+            .then(() => props.onItemChange())
     }
 
     const setStatusDone = () => {
-        fetch(`http://localhost:8080/todo-app/${props.id}`,{method: "PUT"})
-            .then(response => props.onItemChange())
-    }
-
-    function state(state: boolean) {
-        if (!state) {
-            return "noch nich fertsch"
-        } else {
-            return "fertsch"
-        }
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`,{method: "PUT"})
+            .then(() => props.onItemChange())
     }
 
     return(
-        <div className="item-outer">
-            <div>Aufgabe: {props.content}</div>
-            <div>Status: {state(props.statusDone)}</div>
-            <button onClick={deleteItem}>löschen</button>
-            <button onClick={setStatusDone} hidden={props.statusDone}>erledigt</button>
+        <div className={props.todo.statusDone ? 'item-outer-done' : 'item-outer-inProgress'}>
+            <div onClick={deleteItem} className='btn-left'>{t('btn-delete')}</div>
+            <div className='box-content'>
+                <div className='title'>{props.todo.content}</div>
+                <div className={'status'}>{props.todo.statusDone ? t('fertig') : t('nicht-fertig')}</div>
+            </div>
+            <div onClick={setStatusDone} className='btn-right'>{t('btn-state')}</div>
         </div>
     )
-
 
 }
 

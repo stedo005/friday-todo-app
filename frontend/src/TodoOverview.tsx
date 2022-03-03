@@ -1,25 +1,26 @@
 import TodoItem from "./TodoItem"
-import {Todos} from "./model";
 import {useEffect, useState} from "react";
 import "./TodoOverview.css";
 import plus from "./img/plus-icon.png";
+import {Todo} from "./model";
+import {Button} from "react-bootstrap";
 
 const TodoOverview = () => {
 
+    const [data, setData] = useState([] as Array<Todo>);
     const [contentInput, setContentInput] = useState('');
     const [search, setSearch] = useState('');
-    const [data, setData] = useState([] as Array<Todos>);
     const requestBody = {"content":contentInput};
 
     const fetchAll = () => {
-        fetch(`http://localhost:8080/todo-app/listAllItem`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
             .then(response => {return response.json()})
-            .then((responseBody: Array<Todos>) => {setData(responseBody)})
+            .then((responseBody: Array<Todo>) => {setData(responseBody)})
     }
 
     // Erstellt neues TodoItem
     const addItem = () => {
-        fetch(`http://localhost:8080/todo-app`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app`, {
             method: "POST",
             body: JSON.stringify(requestBody),
             headers: {
@@ -28,6 +29,19 @@ const TodoOverview = () => {
         })
             .then(fetchAll)
             .then(() => setContentInput(""))
+    }
+
+    const listAllDone = () => {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllDoneItem`)
+            .then(response => {return response.json()})
+            .then((responseBody: Array<Todo>) => {setData((responseBody))})
+    }
+
+    const deleteAllDone = () => {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/deleteAllDone`, {
+            method: "DELETE"
+        })
+            .then(fetchAll)
     }
 
     useEffect(() => {fetchAll()}, [])
@@ -43,11 +57,18 @@ const TodoOverview = () => {
                 <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
             <div className="input-field">
+                <Button onClick={listAllDone} variant="info">zeige alle mit Status fertsch</Button>
+                <Button onClick={deleteAllDone} variant='danger'>lösche alle mit Status fertsch</Button>
+            </div>
+            <div className="input-field">
+                <Button onClick={fetchAll} variant='info'>zeige alle</Button>
+            </div>
+            <div className="input-field">
                 {
                     data.length > 0
                     ? data
                         .filter(e => e.content.toLowerCase().includes(search.toLowerCase()))
-                        .map((e) => <TodoItem key={e.id} content={e.content} id={e.id} statusDone={e.statusDone} onItemChange={fetchAll}/>)
+                        .map(e => <TodoItem key={e.id} todo={e} onItemChange={fetchAll}/>)
                     : <div>Alles erledigt.</div>
                 }
             </div>

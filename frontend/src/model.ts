@@ -1,6 +1,5 @@
-export interface Todos {
+export interface Todo {
     id: string
     content: string
     statusDone: boolean
-    onItemChange: () => void
 }

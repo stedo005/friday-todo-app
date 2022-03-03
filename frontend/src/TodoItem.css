@@ -1,13 +1,53 @@
 body{
     font-family: "Andale Mono";
-    background-color: #e3bbc9;
+    background-color: #ddc7ef;
 }
 
-.item-outer{
-    padding: 10px;
+.item-outer-done, .item-outer-inProgress{
+    display: flex;
+    justify-content: space-between;
     border-radius: 10px;
-    background-color: hotpink;
+    transition: background-color 0.5s;
     border-style: solid;
+    border-width: 0.8px;
     margin: 10px;
-    min-width: 250px;
+    min-width: 350px;
+    min-height: 50px;
+    box-shadow: 3px 3px 5px dimgray;
+}
+
+.title{
+    font-size: 30px;
+    text-align: center;
+}
+.status{
+    text-align: center;
+}
+
+.box-content{
+    width: 250px;
+}
+
+.item-outer-done{
+    background-color: #60fd01;
+}
+
+.item-outer-inProgress{
+    background-color: #fdd253;
+}
+
+.btn-left, .btn-right {
+    text-align: center;
+    height: inherit;
+    width: 80px;
+}
+
+.btn-left{
+    background-color: #ff1000;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.btn-right{
+    background-color: #60fd01;
+    border-radius: 0px 10px 10px 0px;
 }
