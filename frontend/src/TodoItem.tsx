@@ -20,10 +20,12 @@ const TodoItem = (props: TodoItemProps) => {
 
     return(
         <div className={props.todo.statusDone ? 'item-outer-done' : 'item-outer-inProgress'}>
-            <div>Aufgabe: {props.todo.content}</div>
-            <div>Status: {props.todo.statusDone ? "fertsch" : "nich fertsch"}</div>
-            <button onClick={deleteItem}>löschen</button>
-            <button onClick={setStatusDone}>toggle Status</button>
+            <div onClick={deleteItem} className='btn-left'>löschen</div>
+            <div className='box-content'>
+                <div className='title'>{props.todo.content}</div>
+                <div className={'status'}>{props.todo.statusDone ? "fertsch" : "nich fertsch"}</div>
+            </div>
+            <div onClick={setStatusDone} className='btn-right'>Status</div>
         </div>
     )
 
