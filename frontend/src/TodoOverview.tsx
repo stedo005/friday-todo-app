@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import "./TodoOverview.css";
 import plus from "./img/plus-icon.png";
 import {Todo} from "./model";
+import {Button} from "react-bootstrap";
 
 const TodoOverview = () => {
 
@@ -56,11 +57,11 @@ const TodoOverview = () => {
                 <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
             <div className="input-field">
-                <button onClick={listAllDone}>zeige alle mit Status fertsch</button>
-                <button onClick={deleteAllDone}>lösche alle mit Status fertsch</button>
+                <Button onClick={listAllDone} variant="info">zeige alle mit Status fertsch</Button>
+                <Button onClick={deleteAllDone} variant='danger'>lösche alle mit Status fertsch</Button>
             </div>
             <div className="input-field">
-                <button onClick={fetchAll}>zeige alle</button>
+                <Button onClick={fetchAll} variant='info'>zeige alle</Button>
             </div>
             <div className="input-field">
                 {

@@ -1,5 +1,6 @@
 import "./TodoItem.css"
 import {Todo} from "./model";
+import {useTranslation} from "react-i18next";
 
 interface TodoItemProps {
     todo: Todo
@@ -7,6 +8,8 @@ interface TodoItemProps {
 }
 
 const TodoItem = (props: TodoItemProps) => {
+
+    const { t } = useTranslation();
 
     const deleteItem = () => {
         fetch( `${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {method: "DELETE"})
@@ -20,12 +23,12 @@ const TodoItem = (props: TodoItemProps) => {
 
     return(
         <div className={props.todo.statusDone ? 'item-outer-done' : 'item-outer-inProgress'}>
-            <div onClick={deleteItem} className='btn-left'>löschen</div>
+            <div onClick={deleteItem} className='btn-left'>{t('btn-delete')}</div>
             <div className='box-content'>
                 <div className='title'>{props.todo.content}</div>
-                <div className={'status'}>{props.todo.statusDone ? "fertsch" : "nich fertsch"}</div>
+                <div className={'status'}>{props.todo.statusDone ? t('fertig') : t('nicht-fertig')}</div>
             </div>
-            <div onClick={setStatusDone} className='btn-right'>Status</div>
+            <div onClick={setStatusDone} className='btn-right'>{t('btn-state')}</div>
         </div>
     )
 
