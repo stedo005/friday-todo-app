@@ -4,12 +4,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './i18n'
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Content from './Content';
+import TodoOverview from "./TodoOverview";
 
 
 ReactDOM.render(
     <React.StrictMode>
         <Suspense fallback="Loading...">
-            <App />
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<App />}>
+                        <Route path="todolist" element={<TodoOverview />}/>
+                        <Route path="todolist/:todoId" element={<Content />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
         </Suspense>
     </React.StrictMode>,
   document.getElementById('root')

@@ -1,6 +1,7 @@
 import "./TodoItem.css"
 import {Todo} from "./model";
 import {useTranslation} from "react-i18next";
+import {Link} from "react-router-dom";
 
 interface TodoItemProps {
     todo: Todo
@@ -22,14 +23,16 @@ const TodoItem = (props: TodoItemProps) => {
     }
 
     return(
-        <div className={props.todo.statusDone ? 'item-outer-done' : 'item-outer-inProgress'}>
-            <div onClick={deleteItem} className='btn-left'>{t('btn-delete')}</div>
-            <div className='box-content'>
-                <div className='title'>{props.todo.content}</div>
-                <div className={'status'}>{props.todo.statusDone ? t('fertig') : t('nicht-fertig')}</div>
+            <div className={props.todo.statusDone ? 'item-outer-done' : 'item-outer-inProgress'}>
+                <div onClick={deleteItem} className='btn-left'>{t('btn-delete')}</div>
+                <div className='box-content'>
+                    <Link to={props.todo.id}>
+                        <div className='title'>{props.todo.content}</div>
+                    </Link>
+                    <div className={'status'}>{props.todo.statusDone ? t('fertig') : t('nicht-fertig')}</div>
+                </div>
+                <div onClick={setStatusDone} className='btn-right'>{t('btn-state')}</div>
             </div>
-            <div onClick={setStatusDone} className='btn-right'>{t('btn-state')}</div>
-        </div>
     )
 
 }

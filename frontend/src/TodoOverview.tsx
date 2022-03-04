@@ -72,7 +72,7 @@ const TodoOverview = () => {
                 <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
             <div className="input-field">
-                <Button onClick={listAllDone} variant="info">zeige alle mit Status fertsch</Button>
+                <Button className='test-btn' onClick={listAllDone} variant="info">zeige alle mit Status fertsch</Button>
                 <Button onClick={deleteAllDone} variant='danger'>lösche alle mit Status fertsch</Button>
             </div>
             <div className="input-field">
@@ -84,7 +84,7 @@ const TodoOverview = () => {
                     ? data
                         .filter(e => e.content.toLowerCase().includes(search.toLowerCase()))
                         .map(e => <TodoItem key={e.id} todo={e} onItemChange={fetchAll}/>)
-                    : <div>Alles erledigt.</div>
+                    : <div>Es gibt nichts anzuzeigen.</div>
                 }
             </div>
         </div>
