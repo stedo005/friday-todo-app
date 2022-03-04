@@ -10,12 +10,20 @@ const TodoOverview = () => {
     const [data, setData] = useState([] as Array<Todo>);
     const [contentInput, setContentInput] = useState('');
     const [search, setSearch] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+
     const requestBody = {"content": contentInput};
 
     const fetchAll = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
-            .then(response => {return response.json()})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Etwas ist schief gelaufen!')
+                }
+                return response.json()
+            })
             .then((responseBody: Array<Todo>) => {setData(responseBody)})
+            .catch((err: Error) => {setErrMsg(err.message)})
     }
 
     // Erstellt neues TodoItem
@@ -27,8 +35,14 @@ const TodoOverview = () => {
                 "Content-Type": "application/json"
             }
         })
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Etwas ist schief gelaufen!')
+                }
+            })
             .then(fetchAll)
             .then(() => setContentInput(""))
+            .catch((err: Error) => {setErrMsg(err.message)})
     }
 
     const listAllDone = () => {
@@ -51,6 +65,7 @@ const TodoOverview = () => {
             <div className="input-field">
                 <div onClick={addItem} className="sim-btn"><img src={plus} height={30} alt="plus"/></div>
                 <div><input type="text" placeholder="Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)}/></div>
+                <div>{errMsg}</div>
             </div>
             <div className="input-field">
                 <div>nach Aufgabe suchen: </div>
