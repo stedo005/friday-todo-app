@@ -3,16 +3,21 @@ import {useEffect, useState} from "react";
 import "./TodoOverview.css";
 import plus from "./img/plus-icon.png";
 import {Todo} from "./model";
-import {Button} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 
 const TodoOverview = () => {
 
     const [data, setData] = useState([] as Array<Todo>);
-    const [contentInput, setContentInput] = useState('');
-    const [search, setSearch] = useState('');
+    const [contentInput, setContentInput] = useState(localStorage.getItem('title') ?? '');
+    const [search, setSearch] = useState(localStorage.getItem('searchField') ?? '');
     const [errMsg, setErrMsg] = useState('');
 
     const requestBody = {"content": contentInput};
+
+    useEffect(() => {
+        localStorage.setItem('searchField', search)
+        localStorage.setItem('title', contentInput)
+    },[search, contentInput])
 
     const fetchAll = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
@@ -72,6 +77,7 @@ const TodoOverview = () => {
                 <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
             <div className="input-field">
+                <Form.Check type='switch' label='test'/>
                 <Button className='test-btn' onClick={listAllDone} variant="info">zeige alle mit Status fertsch</Button>
                 <Button onClick={deleteAllDone} variant='danger'>lösche alle mit Status fertsch</Button>
             </div>
