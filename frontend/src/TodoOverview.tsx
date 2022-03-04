@@ -65,6 +65,8 @@ const TodoOverview = () => {
 
     useEffect(() => {fetchAll()}, [])
 
+    const [isChecked, setIsChecked] = useState(false)
+
     return(
         <div>
             <div className="input-field">
@@ -77,12 +79,8 @@ const TodoOverview = () => {
                 <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
             <div className="input-field">
-                <Form.Check type='switch' label='test'/>
-                <Button className='test-btn' onClick={listAllDone} variant="info">zeige alle mit Status fertsch</Button>
+                <Form.Check type='switch' label='zeige nur erledigte' onChange={(event) => {event.target.checked ? listAllDone() : fetchAll()}} />
                 <Button onClick={deleteAllDone} variant='danger'>lösche alle mit Status fertsch</Button>
-            </div>
-            <div className="input-field">
-                <Button onClick={fetchAll} variant='info'>zeige alle</Button>
             </div>
             <div className="input-field">
                 {

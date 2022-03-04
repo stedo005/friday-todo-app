@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 interface content {
     content: string
     statusDone: boolean
-
 }
 
 const Content = () => {
