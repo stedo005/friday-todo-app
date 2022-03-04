@@ -27,8 +27,8 @@ public class TodoService {
         List<TodoItem> doneItem = repoTodos.listAllItem().stream()
                 .filter(e -> e.isStatusDone())
                 .toList();
-        for (int i = 0; i < doneItem.size(); i++) {
-            repoTodos.deleteItem(doneItem.get(i).getId());
+        for (TodoItem todoItem : doneItem) {
+            repoTodos.deleteItem(todoItem.getId());
         }
     }
 

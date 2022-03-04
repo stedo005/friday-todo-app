@@ -10,7 +10,7 @@ const TodoOverview = () => {
     const [data, setData] = useState([] as Array<Todo>);
     const [contentInput, setContentInput] = useState('');
     const [search, setSearch] = useState('');
-    const requestBody = {"content":contentInput};
+    const requestBody = {"content": contentInput};
 
     const fetchAll = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
