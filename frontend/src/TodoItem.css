@@ -17,8 +17,12 @@ body{
 }
 
 .title{
+    color: #445b53;
     font-size: 30px;
     text-align: center;
+}
+.noline{
+    text-decoration: none;
 }
 .status{
     text-align: center;
@@ -33,7 +37,7 @@ body{
 }
 
 .item-outer-inProgress{
-    background-color: #fdd253;
+    background-color: #ff4d4d;
 }
 
 .btn-left, .btn-right {
@@ -42,12 +46,26 @@ body{
     width: 80px;
 }
 
-.btn-left{
-    background-color: #ff1000;
-    border-radius: 10px 0px 0px 10px;
+.btn-left, .btn-right{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: #445b53;
 }
 
+.btn-left{
+    border-radius: 10px 0px 0px 10px;
+}
 .btn-right{
-    background-color: #60fd01;
     border-radius: 0px 10px 10px 0px;
+}
+
+.btn-done{
+    width: 30px;
+    filter: invert(62%) sepia(97%) saturate(656%) hue-rotate(49deg) brightness(107%) contrast(109%);
+}
+
+.btn-delete{
+    width: 30px;
+    filter: invert(19%) sepia(99%) saturate(5909%) hue-rotate(1deg) brightness(103%) contrast(108%);
 }

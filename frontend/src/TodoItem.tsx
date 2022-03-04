@@ -24,14 +24,14 @@ const TodoItem = (props: TodoItemProps) => {
 
     return (
         <div className={props.todo.statusDone ? 'item-outer-done' : 'item-outer-inProgress'}>
-            <div onClick={deleteItem} className='btn-left'>{t('btn-delete')}</div>
-            <Link to={props.todo.id}>
+            <div onClick={deleteItem} className='btn-left'><img className='btn-delete' src={require('./icons/x-circle.svg').default} alt={'check'}/></div>
+            <Link className='noline' to={props.todo.id}>
                 <div className='box-content'>
                     <div className='title'>{props.todo.content}</div>
                     <div className={'status'}>{props.todo.statusDone ? t('fertig') : t('nicht-fertig')}</div>
                 </div>
             </Link>
-            <div onClick={setStatusDone} className='btn-right'>{t('btn-state')}</div>
+            <div onClick={setStatusDone} className='btn-right'><img className='btn-done' src={require('./icons/check-circle.svg').default} alt={'check'}/></div>
         </div>
     )
 
