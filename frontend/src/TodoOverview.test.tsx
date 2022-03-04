@@ -1,5 +1,6 @@
-import {getByTestId, render, screen, waitFor} from "@testing-library/react";
+import {render, screen, waitFor} from "@testing-library/react";
 import TodoOverview from "./TodoOverview";
+import {MemoryRouter} from "react-router-dom";
 
 test('check error handling for status not ok', async () => {
 
@@ -9,7 +10,7 @@ test('check error handling for status not ok', async () => {
         } as Response)
     })
 
-    render(<TodoOverview />);
+    render(<TodoOverview />, {wrapper: MemoryRouter});
 
     await waitFor(() => {
         expect(screen.getByTestId('errMsg').textContent).toEqual('Etwas ist schief gelaufen!')
@@ -25,7 +26,7 @@ test('check error handling for status ok', async () => {
         } as Response)
     })
 
-    render(<TodoOverview />);
+    render(<TodoOverview />, {wrapper: MemoryRouter});
 
     await waitFor(() => {
         expect(screen.getByTestId('errMsg').textContent).toEqual('')
@@ -42,7 +43,7 @@ test('check error handling for addItem', async () => {
         } as Response)
     })
 
-    render(<TodoOverview />);
+    render(<TodoOverview />, {wrapper: MemoryRouter});
 
     screen.getByTestId('addBtn').click()
 
