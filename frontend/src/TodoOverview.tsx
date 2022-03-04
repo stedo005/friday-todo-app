@@ -37,7 +37,7 @@ const TodoOverview = () => {
         })
             .then(response => {
                 if(!response.ok){
-                    throw new Error('Etwas ist schief gelaufen!')
+                    throw new Error('Etwas ist schief gelaufen beim Item erstellen!')
                 }
             })
             .then(fetchAll)
@@ -63,9 +63,9 @@ const TodoOverview = () => {
     return(
         <div>
             <div className="input-field">
-                <div onClick={addItem} className="sim-btn"><img src={plus} height={30} alt="plus"/></div>
+                <div data-testid='addBtn' onClick={addItem} className="sim-btn"><img src={plus} height={30} alt="plus"/></div>
                 <div><input type="text" placeholder="Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)}/></div>
-                <div>{errMsg}</div>
+                <div data-testid='errMsg'>{errMsg}</div>
             </div>
             <div className="input-field">
                 <div>nach Aufgabe suchen: </div>
