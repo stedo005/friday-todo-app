@@ -78,7 +78,7 @@ const TodoOverview = () => {
     return(
         <div>
             <div className="input-field">
-                <img onClick={addItem} className='btn-done' src={require('./icons/plus-circle.svg').default} alt={'check'}/>
+                <img data-testid='addBtn' onClick={addItem} className='btn-done' src={require('./icons/plus-circle.svg').default} alt={'check'}/>
                 <div className='px-2'>
                     <input type="text" placeholder="Titel" value={titleInput} onChange={value => setTitleInput(value.target.value)} />
                 </div>
