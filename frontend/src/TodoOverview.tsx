@@ -1,9 +1,8 @@
 import TodoItem from "./TodoItem"
 import {useEffect, useState} from "react";
 import "./TodoOverview.css";
-import plus from "./img/plus-icon.png";
 import {Todo} from "./model";
-import {Button, Form} from "react-bootstrap";
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
 
 const TodoOverview = () => {
 
@@ -74,17 +73,18 @@ const TodoOverview = () => {
     return(
         <div>
             <div className="input-field">
-                <div data-testid='addBtn' onClick={addItem} className="sim-btn"><img src={plus} height={30} alt="plus"/></div>
-                <div><input type="text" placeholder="Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)} onKeyUp={e => e.key == 'Enter' ? addItem() : ''}/></div>
+                <img onClick={addItem} className='btn-done' src={require('./icons/plus-circle.svg').default} alt={'check'}/>
+                <div className='px-2'><input type="text" placeholder="neue Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)} onKeyUp={e => e.key == 'Enter' ? addItem() : ''}/></div>
                 <div data-testid='errMsg'>{errMsg}</div>
             </div>
+            <Container>
+                <Row>
+                    <Col lg={12} className='center p-3'><img onClick={deleteAllDone} className='btn-delete' src={require('./icons/x-circle.svg').default} alt={'check'}/><div className='mx-2'>Lösche alle erledigten Aufgaben!</div></Col>
+                    <Col><div className='center'><Form.Check type='switch' label='Zeige alle erledigten Aufaben!' checked={done} onChange={() => done ? setDone(false) : setDone(true)} /></div></Col>
+                </Row>
+            </Container>
             <div className="input-field">
-                <div>nach Aufgabe suchen: </div>
-                <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
-            </div>
-            <div className="input-field">
-                <Form.Check type='switch' label='zeige nur erledigte' checked={done} onChange={() => done ? setDone(false) : setDone(true)} />
-                <Button onClick={deleteAllDone} variant='danger'>lösche alle mit Status fertsch</Button>
+                <input id="search" type="text" placeholder="Suche" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
             <div className="input-field">
                 {

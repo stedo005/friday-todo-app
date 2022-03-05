@@ -25,3 +25,7 @@
 .test-btn{
     background-color: #fdd253;
 }
+.center{
+    display: flex;
+    justify-content: center;
+}
