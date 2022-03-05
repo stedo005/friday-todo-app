@@ -12,13 +12,25 @@ const TodoItem = (props: TodoItemProps) => {
 
     const {t} = useTranslation();
 
+    const requestBody = {
+        "title": props.todo.title,
+        "task": props.todo.task,
+        "statusDone": props.todo.statusDone
+    }
+
     const deleteItem = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {method: "DELETE"})
             .then(() => props.onItemChange())
     }
 
     const setStatusDone = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {method: "PUT"})
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {
+            method: "PUT",
+            body: JSON.stringify(requestBody),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
             .then(() => props.onItemChange())
     }
 
