@@ -48,7 +48,7 @@ test('check error handling for addItem', async () => {
     screen.getByTestId('addBtn').click()
 
     await waitFor(() => {
-        expect(screen.getByTestId('errMsg').textContent).toEqual('Etwas ist schief gelaufen beim Item erstellen!')
+        expect(screen.getByTestId('errMsg').textContent).toEqual('Etwas ist schief gelaufen beim Todo erstellen!')
     })
 
 })
