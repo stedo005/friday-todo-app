@@ -11,7 +11,7 @@ const TodoOverview = () => {
     const [taskInput, setTaskInput] = useState('');
     const [search, setSearch] = useState(localStorage.getItem('searchField') ?? '');
     const [errMsg, setErrMsg] = useState('');
-    const [done, setDone] = useState(false)
+    const [doneSearch, setDoneSearch] = useState(false)
 
     const requestBody = {
         "title": titleInput,
@@ -24,8 +24,8 @@ const TodoOverview = () => {
     },[search, titleInput])
 
     useEffect(() => {
-        done ? listAllDone() : fetchAll()
-    }, [done])
+        doneSearch ? listAllDone() : fetchAll()
+    }, [doneSearch])
 
     const fetchAll = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
@@ -37,7 +37,7 @@ const TodoOverview = () => {
             })
             .then((responseBody: Array<Todo>) => {setData(responseBody)})
             .catch((err: Error) => {setErrMsg(err.message)})
-        setDone(false)
+        setDoneSearch(false)
     }
 
     // Erstellt neues TodoItem
@@ -83,14 +83,14 @@ const TodoOverview = () => {
                     <input type="text" placeholder="Titel" value={titleInput} onChange={value => setTitleInput(value.target.value)} />
                 </div>
                 <div className='px-2'>
-                    <input type='text' placeholder='Aufgabe' value={taskInput} onChange={value => setTaskInput(value.target.value)} onKeyUp={e => e.key == 'Enter' ? addItem() : ''} />
+                    <input type='text' placeholder='Aufgabe' value={taskInput} onChange={value => setTaskInput(value.target.value)} onKeyUp={e => e.key === 'Enter' ? addItem() : ''} />
                 </div>
                 <div data-testid='errMsg'>{errMsg}</div>
             </div>
             <Container>
                 <Row>
                     <Col lg={12} className='center p-3'><img onClick={deleteAllDone} className='btn-delete' src={require('./icons/x-circle.svg').default} alt={'check'}/><div className='mx-2'>Lösche alle erledigten Aufgaben!</div></Col>
-                    <Col><div className='center'><Form.Check type='switch' label='Zeige alle erledigten Aufaben!' checked={done} onChange={() => done ? setDone(false) : setDone(true)} /></div></Col>
+                    <Col><div className='center'><Form.Check type='switch' label='Zeige alle erledigten Aufaben!' checked={doneSearch} onChange={() => doneSearch ? setDoneSearch(false) : setDoneSearch(true)} /></div></Col>
                 </Row>
             </Container>
             <div className="input-field">
