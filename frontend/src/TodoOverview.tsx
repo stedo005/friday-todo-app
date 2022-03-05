@@ -11,6 +11,7 @@ const TodoOverview = () => {
     const [contentInput, setContentInput] = useState(localStorage.getItem('title') ?? '');
     const [search, setSearch] = useState(localStorage.getItem('searchField') ?? '');
     const [errMsg, setErrMsg] = useState('');
+    const [done, setDone] = useState(false)
 
     const requestBody = {"content": contentInput};
 
@@ -18,6 +19,10 @@ const TodoOverview = () => {
         localStorage.setItem('searchField', search)
         localStorage.setItem('title', contentInput)
     },[search, contentInput])
+
+    useEffect(() => {
+        done ? listAllDone() : fetchAll()
+    }, [done])
 
     const fetchAll = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
@@ -29,7 +34,7 @@ const TodoOverview = () => {
             })
             .then((responseBody: Array<Todo>) => {setData(responseBody)})
             .catch((err: Error) => {setErrMsg(err.message)})
-
+        setDone(false)
     }
 
     // Erstellt neues TodoItem
@@ -70,7 +75,7 @@ const TodoOverview = () => {
         <div>
             <div className="input-field">
                 <div data-testid='addBtn' onClick={addItem} className="sim-btn"><img src={plus} height={30} alt="plus"/></div>
-                <div><input type="text" placeholder="Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)}/></div>
+                <div><input type="text" placeholder="Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)} onKeyUp={e => e.key == 'Enter' ? addItem() : ''}/></div>
                 <div data-testid='errMsg'>{errMsg}</div>
             </div>
             <div className="input-field">
@@ -78,7 +83,7 @@ const TodoOverview = () => {
                 <input id="search" type="text" placeholder="Aufgabe" value={search} onChange={value => setSearch(value.target.value)}/>
             </div>
             <div className="input-field">
-                <Form.Check type='switch' label='zeige nur erledigte' onChange={(event) => {if(event.target.checked){listAllDone()}else {fetchAll()}}} />
+                <Form.Check type='switch' label='zeige nur erledigte' checked={done} onChange={() => done ? setDone(false) : setDone(true)} />
                 <Button onClick={deleteAllDone} variant='danger'>lösche alle mit Status fertsch</Button>
             </div>
             <div className="input-field">
