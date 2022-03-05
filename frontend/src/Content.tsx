@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 interface content {
-    content: string
+    title: string
     statusDone: boolean
 }
 
@@ -19,7 +19,7 @@ const Content = () => {
 
     return(
         <div>
-            <div>{content.content}</div>
+            <div>{content.title}</div>
             <div>{content.statusDone ? 'fertig' : 'nicht fertig'}</div>
         </div>
     )

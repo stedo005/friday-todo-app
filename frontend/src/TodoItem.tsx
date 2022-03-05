@@ -27,7 +27,7 @@ const TodoItem = (props: TodoItemProps) => {
             <div onClick={deleteItem} className='btn-left'><img className='btn-delete' src={require('./icons/x-circle.svg').default} alt={'check'}/></div>
             <Link className='noline' to={props.todo.id}>
                 <div className='box-content'>
-                    <div className='title'>{props.todo.content}</div>
+                    <div className='title'>{props.todo.title}</div>
                     <div className={'status'}>{props.todo.statusDone ? t('fertig') : t('nicht-fertig')}</div>
                 </div>
             </Link>

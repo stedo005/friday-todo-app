@@ -2,22 +2,22 @@ import TodoItem from "./TodoItem"
 import {useEffect, useState} from "react";
 import "./TodoOverview.css";
 import {Todo} from "./model";
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Col, Container, Form, Row} from "react-bootstrap";
 
 const TodoOverview = () => {
 
     const [data, setData] = useState([] as Array<Todo>);
-    const [contentInput, setContentInput] = useState(localStorage.getItem('title') ?? '');
+    const [titleInput, setTitleInput] = useState(localStorage.getItem('title') ?? '');
     const [search, setSearch] = useState(localStorage.getItem('searchField') ?? '');
     const [errMsg, setErrMsg] = useState('');
     const [done, setDone] = useState(false)
 
-    const requestBody = {"content": contentInput};
+    const requestBody = {"title": titleInput};
 
     useEffect(() => {
         localStorage.setItem('searchField', search)
-        localStorage.setItem('title', contentInput)
-    },[search, contentInput])
+        localStorage.setItem('title', titleInput)
+    },[search, titleInput])
 
     useEffect(() => {
         done ? listAllDone() : fetchAll()
@@ -51,7 +51,7 @@ const TodoOverview = () => {
                 }
             })
             .then(fetchAll)
-            .then(() => setContentInput(""))
+            .then(() => setTitleInput(""))
             .catch((err: Error) => {setErrMsg(err.message)})
     }
 
@@ -74,7 +74,7 @@ const TodoOverview = () => {
         <div>
             <div className="input-field">
                 <img onClick={addItem} className='btn-done' src={require('./icons/plus-circle.svg').default} alt={'check'}/>
-                <div className='px-2'><input type="text" placeholder="neue Aufgabe" value={contentInput} onChange={value => setContentInput(value.target.value)} onKeyUp={e => e.key == 'Enter' ? addItem() : ''}/></div>
+                <div className='px-2'><input type="text" placeholder="neue Aufgabe" value={titleInput} onChange={value => setTitleInput(value.target.value)} onKeyUp={e => e.key == 'Enter' ? addItem() : ''}/></div>
                 <div data-testid='errMsg'>{errMsg}</div>
             </div>
             <Container>
@@ -90,7 +90,7 @@ const TodoOverview = () => {
                 {
                     data.length > 0
                     ? data
-                        .filter(e => e.content.toLowerCase().includes(search.toLowerCase()))
+                        .filter(e => e.title.toLowerCase().includes(search.toLowerCase()))
                         .map(e => <TodoItem key={e.id} todo={e} onItemChange={fetchAll}/>)
                     : <div>Es gibt nichts anzuzeigen.</div>
                 }
