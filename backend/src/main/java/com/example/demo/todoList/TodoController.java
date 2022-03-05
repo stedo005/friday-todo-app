@@ -31,8 +31,13 @@ public class TodoController {
     }
 
     @PutMapping("/{idItem}")
-    public void setStatusDone(@PathVariable String idItem) {
-        todoService.setStatusDone(idItem);
+    public void changeStatus(@PathVariable String idItem) {
+        todoService.changeStatus(idItem);
+    }
+
+    @PutMapping
+    public void changeOneItem(@RequestBody TodoItem changedItem) {
+        todoService.changeOneItem(changedItem);
     }
 
     @GetMapping("/listAllItem")

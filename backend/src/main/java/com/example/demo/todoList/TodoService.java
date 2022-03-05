@@ -2,9 +2,7 @@ package com.example.demo.todoList;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TodoService {
@@ -46,8 +44,13 @@ public class TodoService {
         return repoTodos.listOneItem(id);
     }
 
-    public void setStatusDone(String id) {
-        if (repoTodos.listOneItem(id).isStatusDone() == false) {
+    public void changeOneItem(TodoItem changedItem) {
+        listOneItem(changedItem.getId()).setTitle(changedItem.getTitle());
+        listOneItem(changedItem.getId()).setTask(changedItem.getTask());
+    }
+
+    public void changeStatus(String id){
+        if(listOneItem(id).isStatusDone() == false) {
             listOneItem(id).setStatusDone(true);
         } else {
             listOneItem(id).setStatusDone(false);

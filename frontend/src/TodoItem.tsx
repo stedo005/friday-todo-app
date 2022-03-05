@@ -24,13 +24,7 @@ const TodoItem = (props: TodoItemProps) => {
     }
 
     const setStatusDone = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {
-            method: "PUT",
-            body: JSON.stringify(requestBody),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {method: "PUT"})
             .then(() => props.onItemChange())
     }
 
