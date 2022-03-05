@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 
 interface content {
     title: string
+    task: string
     statusDone: boolean
 }
 
@@ -19,8 +20,9 @@ const Content = () => {
 
     return(
         <div>
-            <div>{content.title}</div>
-            <div>{content.statusDone ? 'fertig' : 'nicht fertig'}</div>
+            <div>Titel: {content.title}</div>
+            <div>Aufgabe: {content.task}</div>
+            <div>Status: {content.statusDone ? 'fertig' : 'nicht fertig'}</div>
         </div>
     )
 }

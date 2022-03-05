@@ -8,11 +8,15 @@ const TodoOverview = () => {
 
     const [data, setData] = useState([] as Array<Todo>);
     const [titleInput, setTitleInput] = useState(localStorage.getItem('title') ?? '');
+    const [taskInput, setTaskInput] = useState('');
     const [search, setSearch] = useState(localStorage.getItem('searchField') ?? '');
     const [errMsg, setErrMsg] = useState('');
     const [done, setDone] = useState(false)
 
-    const requestBody = {"title": titleInput};
+    const requestBody = {
+        "title": titleInput,
+        "task": taskInput
+    };
 
     useEffect(() => {
         localStorage.setItem('searchField', search)
@@ -51,8 +55,9 @@ const TodoOverview = () => {
                 }
             })
             .then(fetchAll)
-            .then(() => setTitleInput(""))
             .catch((err: Error) => {setErrMsg(err.message)})
+        setTitleInput("");
+        setTaskInput("");
     }
 
     const listAllDone = () => {
@@ -74,7 +79,12 @@ const TodoOverview = () => {
         <div>
             <div className="input-field">
                 <img onClick={addItem} className='btn-done' src={require('./icons/plus-circle.svg').default} alt={'check'}/>
-                <div className='px-2'><input type="text" placeholder="neue Aufgabe" value={titleInput} onChange={value => setTitleInput(value.target.value)} onKeyUp={e => e.key == 'Enter' ? addItem() : ''}/></div>
+                <div className='px-2'>
+                    <input type="text" placeholder="Titel" value={titleInput} onChange={value => setTitleInput(value.target.value)} />
+                </div>
+                <div className='px-2'>
+                    <input type='text' placeholder='Aufgabe' value={taskInput} onChange={value => setTaskInput(value.target.value)} onKeyUp={e => e.key == 'Enter' ? addItem() : ''} />
+                </div>
                 <div data-testid='errMsg'>{errMsg}</div>
             </div>
             <Container>
