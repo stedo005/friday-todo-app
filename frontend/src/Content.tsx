@@ -31,7 +31,7 @@ const Content = () => {
             .then((responseBody: any) => {setContent(responseBody)})
     }, [id.todoId])
 
-    useEffect(() => {fetchContent()}, [])
+    useEffect(() => {fetchContent()}, [fetchContent])
 
     const changeItem = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app`, {

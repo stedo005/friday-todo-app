@@ -21,15 +21,6 @@ const TodoOverview = () => {
         "task": taskInput
     };
 
-    useEffect(() => {
-        localStorage.setItem('searchField', search)
-        localStorage.setItem('title', titleInput)
-    },[search, titleInput])
-
-    useEffect(() => {
-        doneSearch ? listAllDone() : fetchAll()
-    }, [doneSearch])
-
     const fetchAll = useCallback(() => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
             .then(response => {
@@ -42,6 +33,18 @@ const TodoOverview = () => {
             .catch((err: Error) => {setErrMsg(err.message)})
         setDoneSearch(false)
     }, [t])
+
+
+    useEffect(() => {
+        localStorage.setItem('searchField', search)
+        localStorage.setItem('title', titleInput)
+    },[search, titleInput])
+
+    useEffect(() => {
+        doneSearch ? listAllDone() : fetchAll()
+    }, [doneSearch,fetchAll])
+
+    useEffect(() => {fetchAll()}, [fetchAll])
 
     // Erstellt neues TodoItem
     const addItem = () => {
@@ -76,8 +79,6 @@ const TodoOverview = () => {
         })
             .then(fetchAll)
     }
-
-    useEffect(() => {fetchAll()}, [])
 
     return(
         <div>
