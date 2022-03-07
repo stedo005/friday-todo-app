@@ -20,9 +20,9 @@ class TodoServiceTest {
         TodoItem point2 = new TodoItem();
         TodoItem point3 = new TodoItem();
 
-        point1.setContent("Punkt 1");
-        point2.setContent("Punkt 2");
-        point3.setContent("Punkt 3");
+        point1.setTitle("Punkt 1");
+        point2.setTitle("Punkt 2");
+        point3.setTitle("Punkt 3");
 
         List<TodoItem> repo = new ArrayList<>();
         repo.add(point1);
@@ -46,9 +46,9 @@ class TodoServiceTest {
         TodoItem point2 = new TodoItem();
         TodoItem point3 = new TodoItem();
 
-        point1.setContent("Punkt 1");
-        point2.setContent("Punkt 2");
-        point3.setContent("Punkt 3");
+        point1.setTitle("Punkt 1");
+        point2.setTitle("Punkt 2");
+        point3.setTitle("Punkt 3");
 
         List<TodoItem> repo = new ArrayList<>();
 
@@ -73,9 +73,9 @@ class TodoServiceTest {
         TodoItem point2 = new TodoItem();
         TodoItem point3 = new TodoItem();
 
-        point1.setContent("Punkt 1");
-        point2.setContent("Punkt 2");
-        point3.setContent("Punkt 3");
+        point1.setTitle("Punkt 1");
+        point2.setTitle("Punkt 2");
+        point3.setTitle("Punkt 3");
 
         List<TodoItem> repo = new ArrayList<>();
 
@@ -86,7 +86,7 @@ class TodoServiceTest {
         service.addItem(point2);
         service.addItem(point3);
 
-        service.setStatusDone(point1.getId());
+        service.changeStatus(point1.getId());
         boolean actual = point1.isStatusDone();
         assertTrue(actual);
 
@@ -100,9 +100,9 @@ class TodoServiceTest {
         TodoItem point2 = new TodoItem();
         TodoItem point3 = new TodoItem();
 
-        point1.setContent("Punkt 1");
-        point2.setContent("Punkt 2");
-        point3.setContent("Punkt 3");
+        point1.setTitle("Punkt 1");
+        point2.setTitle("Punkt 2");
+        point3.setTitle("Punkt 3");
 
         List<TodoItem> repo = new ArrayList<>();
         RepoTodos repoTodos = new RepoTodos(repo);
@@ -127,9 +127,9 @@ class TodoServiceTest {
         TodoItem point2 = new TodoItem();
         TodoItem point3 = new TodoItem();
 
-        point1.setContent("Punkt 1");
-        point2.setContent("Punkt 2");
-        point3.setContent("Punkt 3");
+        point1.setTitle("Punkt 1");
+        point2.setTitle("Punkt 2");
+        point3.setTitle("Punkt 3");
 
         RepoTodos mockedRepo = Mockito.mock(RepoTodos.class);
 

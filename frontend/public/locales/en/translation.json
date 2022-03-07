@@ -1,6 +1,15 @@
 {
-  "btn-delete": "delete",
-  "btn-state": "state",
-  "fertig": "ready",
-  "nicht-fertig": "not ready"
+  "neuer Titel": "new Title",
+  "neue Aufgabe": "new Task",
+  "fertig": "done",
+  "nicht fertig": "not done",
+  "Ändern!": "Change!",
+  "Titel": "Title",
+  "Aufgabe": "Task",
+  "Lösche alle erledigten Aufgaben!": "Delete all done Tasks!",
+  "Zeige alle erledigten Aufaben!": "Show all done Tasks!",
+  "Suche": "Search",
+  "Es gibt nichts anzuzeigen.": "There is nothing to show.",
+  "Etwas ist schief gelaufen beim Todo erstellen!": "Something goes wrong by add new Todo!",
+  "Etwas ist schief gelaufen!": "Something goes wrong!"
 }

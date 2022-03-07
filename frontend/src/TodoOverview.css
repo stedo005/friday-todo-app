@@ -21,3 +21,11 @@
     width: 40px;
     height: 40px;
 }
+
+.test-btn{
+    background-color: #fdd253;
+}
+.center{
+    display: flex;
+    justify-content: center;
+}

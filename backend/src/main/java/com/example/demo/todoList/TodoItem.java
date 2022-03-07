@@ -10,7 +10,8 @@ import java.util.UUID;
 public class TodoItem {
 
     private String id = UUID.randomUUID().toString();
-    private String content = "";
+    private String title ="";
+    private String task = "";
     private boolean statusDone;
 
 }
