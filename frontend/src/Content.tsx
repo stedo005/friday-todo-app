@@ -18,25 +18,21 @@ const Content = () => {
     const [newTitle, setNewTitle] = useState('')
     const [newTask, setNewTask] = useState('')
 
-    const requestBody = {
-        "id": id.todoId,
-        "title": newTitle,
-        "task": newTask,
-        "statusDone": content.statusDone
-    }
-
     const fetchContent = useCallback(() => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`)
             .then(response => {return response.json()})
             .then((responseBody: any) => {setContent(responseBody)})
     }, [id.todoId])
 
-    useEffect(() => {fetchContent()}, [fetchContent])
-
     const changeItem = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app`, {
             method: "PUT",
-            body: JSON.stringify(requestBody),
+            body: JSON.stringify({
+                "id": id.todoId,
+                "title": newTitle,
+                "task": newTask,
+                "statusDone": content.statusDone
+            }),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -46,6 +42,8 @@ const Content = () => {
             .then(() => setNewTitle(''))
             .then(() => setNewTask(''))
     }
+
+    useEffect(() => {fetchContent()}, [fetchContent])
 
     return(
         <div>

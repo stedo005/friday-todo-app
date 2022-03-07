@@ -16,11 +16,6 @@ const TodoOverview = () => {
     const [errMsg, setErrMsg] = useState('');
     const [doneSearch, setDoneSearch] = useState(false)
 
-    const requestBody = {
-        "title": titleInput,
-        "task": taskInput
-    };
-
     const fetchAll = useCallback(() => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
             .then(response => {
@@ -30,10 +25,9 @@ const TodoOverview = () => {
                 return response.json()
             })
             .then((responseBody: Array<Todo>) => {setData(responseBody)})
+            .then(() => setDoneSearch(false))
             .catch((err: Error) => {setErrMsg(err.message)})
-        setDoneSearch(false)
     }, [t])
-
 
     useEffect(() => {
         localStorage.setItem('searchField', search)
@@ -51,7 +45,10 @@ const TodoOverview = () => {
 
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app`, {
             method: "POST",
-            body: JSON.stringify(requestBody),
+            body: JSON.stringify({
+                "title": titleInput,
+                "task": taskInput
+            }),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -62,9 +59,9 @@ const TodoOverview = () => {
                 }
             })
             .then(fetchAll)
+            .then(() => setTitleInput(''))
+            .then(() => setTaskInput(''))
             .catch((err: Error) => {setErrMsg(err.message)})
-        setTitleInput("");
-        setTaskInput("");
     }
 
     const listAllDone = () => {
