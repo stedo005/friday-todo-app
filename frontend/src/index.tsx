@@ -14,7 +14,7 @@ ReactDOM.render(
         <Suspense fallback="Loading...">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<App />}>
+                    <Route path="" element={<App />}>
                         <Route path="todolist" element={<TodoOverview />}/>
                         <Route path="todolist/:todoId" element={<Content />} />
                     </Route>

@@ -1,5 +1,5 @@
 import TodoItem from "./TodoItem"
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import "./TodoOverview.css";
 import {Todo} from "./model";
 import {Col, Container, Form, Row} from "react-bootstrap";
@@ -30,7 +30,7 @@ const TodoOverview = () => {
         doneSearch ? listAllDone() : fetchAll()
     }, [doneSearch])
 
-    const fetchAll = () => {
+    const fetchAll = useCallback(() => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
             .then(response => {
                 if (!response.ok) {
@@ -41,10 +41,11 @@ const TodoOverview = () => {
             .then((responseBody: Array<Todo>) => {setData(responseBody)})
             .catch((err: Error) => {setErrMsg(err.message)})
         setDoneSearch(false)
-    }
+    }, [t])
 
     // Erstellt neues TodoItem
     const addItem = () => {
+
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app`, {
             method: "POST",
             body: JSON.stringify(requestBody),
@@ -86,7 +87,7 @@ const TodoOverview = () => {
                     <input type="text" placeholder={t("Titel")} value={titleInput} onChange={value => setTitleInput(value.target.value)} />
                 </div>
                 <div className='px-2'>
-                    <input type='text' placeholder={t('Aufgabe')} value={taskInput} onChange={value => setTaskInput(value.target.value)} onKeyUp={e => e.key === 'Enter' ? addItem() : ''} />
+                    <input type='text' placeholder={t('Aufgabe')} value={taskInput} onChange={value => setTaskInput(value.target.value)} onKeyUp={e => {if (e.key === 'Enter') {addItem()}}} />
                 </div>
                 <div data-testid='errMsg'>{errMsg}</div>
             </div>

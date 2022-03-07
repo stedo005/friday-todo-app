@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 
 interface content {
@@ -25,11 +25,11 @@ const Content = () => {
         "statusDone": content.statusDone
     }
 
-    const fetchContent = () => {
+    const fetchContent = useCallback(() => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`)
             .then(response => {return response.json()})
             .then((responseBody: any) => {setContent(responseBody)})
-    }
+    }, [id.todoId])
 
     useEffect(() => {fetchContent()}, [])
 
