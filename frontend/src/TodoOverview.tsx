@@ -17,7 +17,7 @@ const TodoOverview = () => {
     const [doneSearch, setDoneSearch] = useState(false)
 
     const fetchAll = useCallback(() => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`, {mode:'cors'})
             .then(response => {
                 if (!response.ok) {
                     throw new Error(t('Etwas ist schief gelaufen!'))
