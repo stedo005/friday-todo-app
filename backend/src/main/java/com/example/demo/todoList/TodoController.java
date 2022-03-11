@@ -25,34 +25,40 @@ public class TodoController {
         todoService.deleteItem(idItem);
     }
 
+    @GetMapping("/listAllItem")
+    public List<TodoItem> listAllItem() {
+        return todoService.listAllItem();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<TodoItem> listOneItem(@PathVariable String id) {
+        return ResponseEntity.of(todoService.listOneItem(id));
+    }
+
+    @PatchMapping("/{id}")
+    public void patchTodo(@PathVariable String id, TodoItem todoItem) {
+        todoService.patchTodo(id, todoItem);
+    }
+
 /*    @DeleteMapping("/deleteAllDone")
     public void deleteAllDone() {
         todoService.deleteAllDone();
     }*/
 
-    @PutMapping("/{idItem}")
+/*    @PutMapping("/{idItem}")
     public void changeStatus(@PathVariable String idItem) {
         todoService.changeStatus(idItem);
-    }
+    }*/
 
 /*    @PutMapping
     public void changeOneItem(@RequestBody TodoItem changedItem) {
         todoService.changeOneItem(changedItem);
     }*/
 
-    @GetMapping("/listAllItem")
-    public List<TodoItem> listAllItem() {
-        return todoService.listAllItem();
-    }
 
  /*   @GetMapping("/listAllDoneItem")
     public List<TodoItem> listAllDone() {
         return todoService.listAllDoneItem();
     }*/
-
-    @GetMapping("{id}")
-    public ResponseEntity<TodoItem> listOneItem(@PathVariable String id) {
-        return ResponseEntity.of(todoService.listOneItem(id));
-    }
 
 }
