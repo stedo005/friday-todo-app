@@ -38,7 +38,7 @@ const TodoOverview = () => {
         doneSearch ? listAllDone() : fetchAll()
     }, [doneSearch,fetchAll])
 
-    useEffect(() => {fetchAll()}, [])
+    useEffect(() => {fetchAll()}, [fetchAll])
 
     // Erstellt neues TodoItem
     const addItem = () => {
