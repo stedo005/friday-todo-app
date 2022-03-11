@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -35,9 +36,20 @@ public class TodoService {
             TodoItem currentTodo = optionalOfTodoItem.get();
             if(todoItem.isStatusDone()){
                 currentTodo.setStatusDone(false);
-            } else {
+            }
+
+            if(!todoItem.isStatusDone()) {
                 currentTodo.setStatusDone(true);
             }
+
+            if(!Objects.equals(todoItem.getTitle(), "")){
+                currentTodo.setTitle(todoItem.getTitle());
+            }
+
+            if(!Objects.equals(todoItem.getTask(), "")){
+                currentTodo.setTask(todoItem.getTask());
+            }
+            todoRepository.save(currentTodo);
         }
     }
 

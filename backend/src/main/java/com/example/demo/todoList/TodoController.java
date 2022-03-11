@@ -30,7 +30,7 @@ public class TodoController {
         return todoService.listAllItem();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TodoItem> listOneItem(@PathVariable String id) {
         return ResponseEntity.of(todoService.listOneItem(id));
     }
