@@ -1,60 +1,59 @@
 package com.example.demo.todoList;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TodoService {
 
-    private final RepoTodos repoTodos;
-
-    public TodoService(RepoTodos repoTodos) {
-        this.repoTodos = repoTodos;
-    }
+    private final TodoRepository todoRepository;
 
     public void addItem(TodoItem todoItem) {
-        repoTodos.addItem(todoItem);
+        todoRepository.save(todoItem);
     }
 
     public void deleteItem(String idItem) {
-        repoTodos.deleteItem(idItem);
+        todoRepository.deleteById(idItem);
     }
 
-    public void deleteAllDone() {
+/*    public void deleteAllDone() {
         List<TodoItem> doneItem = repoTodos.listAllItem().stream()
                 .filter(e -> e.isStatusDone())
                 .toList();
         for (TodoItem todoItem : doneItem) {
             repoTodos.deleteItem(todoItem.getId());
         }
-    }
+    }*/
 
     public List<TodoItem> listAllItem() {
-        return repoTodos.listAllItem();
+        return todoRepository.findAll();
     }
 
-    public List<TodoItem> listAllDoneItem() {
+/*    public List<TodoItem> listAllDoneItem() {
         return repoTodos.listAllItem().stream()
                 .filter(e -> e.isStatusDone())
                 .toList();
+    }*/
+
+    public Optional<TodoItem> listOneItem(String id) {
+        return todoRepository.findById(id);
     }
 
-    public TodoItem listOneItem(String id) {
-        return repoTodos.listOneItem(id);
-    }
-
-    public void changeOneItem(TodoItem changedItem) {
+/*    public void changeOneItem(TodoItem changedItem) {
         listOneItem(changedItem.getId()).setTitle(changedItem.getTitle());
         listOneItem(changedItem.getId()).setTask(changedItem.getTask());
-    }
+    }*/
 
-    public void changeStatus(String id){
+/*    public void changeStatus(String id){
         if(listOneItem(id).isStatusDone() == false) {
             listOneItem(id).setStatusDone(true);
         } else {
             listOneItem(id).setStatusDone(false);
         }
-    }
+    }*/
 
 }

@@ -1,19 +1,19 @@
 package com.example.demo.todoList;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/todo-app")
 @CrossOrigin
+@RequiredArgsConstructor
 public class TodoController {
 
     private final TodoService todoService;
-
-    public TodoController(TodoService todoService) {
-        this.todoService = todoService;
-    }
 
     @PostMapping
     public void addItem(@RequestBody TodoItem todoItem) {
@@ -25,34 +25,34 @@ public class TodoController {
         todoService.deleteItem(idItem);
     }
 
-    @DeleteMapping("/deleteAllDone")
+/*    @DeleteMapping("/deleteAllDone")
     public void deleteAllDone() {
         todoService.deleteAllDone();
-    }
+    }*/
 
     @PutMapping("/{idItem}")
     public void changeStatus(@PathVariable String idItem) {
         todoService.changeStatus(idItem);
     }
 
-    @PutMapping
+/*    @PutMapping
     public void changeOneItem(@RequestBody TodoItem changedItem) {
         todoService.changeOneItem(changedItem);
-    }
+    }*/
 
     @GetMapping("/listAllItem")
     public List<TodoItem> listAllItem() {
         return todoService.listAllItem();
     }
 
-    @GetMapping("/listAllDoneItem")
+ /*   @GetMapping("/listAllDoneItem")
     public List<TodoItem> listAllDone() {
         return todoService.listAllDoneItem();
-    }
+    }*/
 
-    @GetMapping("{idItem}")
-    public TodoItem listOneItem(@PathVariable String idItem) {
-        return todoService.listOneItem(idItem);
+    @GetMapping("{id}")
+    public ResponseEntity<TodoItem> listOneItem(@PathVariable String id) {
+        return ResponseEntity.of(todoService.listOneItem(id));
     }
 
 }
