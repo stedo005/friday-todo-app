@@ -2,9 +2,10 @@ import {useParams} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 
-interface content {
-    title: string
-    task: string
+interface Contents {
+    id: string,
+    title: string,
+    task: string,
     statusDone: boolean
 }
 
@@ -12,7 +13,7 @@ const Content = () => {
 
     const {t} = useTranslation()
 
-    const [content, setContent] = useState({} as content);
+    const [contents, setContents] = useState({} as Contents);
     const id = useParams();
 
     const [newTitle, setNewTitle] = useState('')
@@ -21,22 +22,21 @@ const Content = () => {
     const fetchContent = useCallback(() => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`)
             .then(response => {return response.json()})
-            .then((responseBody: any) => {setContent(responseBody)})
+            .then((responseBody: any) => {setContents(responseBody)})
     }, [id.todoId])
 
     const changeItem = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app${id.todoId}`, {
-            method: "PATCH",
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`, {
+            method: "PUT",
             body: JSON.stringify({
-                "id": id.todoId,
+                "id": `${contents.id}`,
                 "title": newTitle,
                 "task": newTask,
-                "statusDone": content.statusDone
+                "statusDone": `${contents.statusDone}`
             }),
             headers: {
                 "Content-Type": "application/json"
             }
-
         })
             .then(() => fetchContent())
             .then(() => setNewTitle(''))
@@ -47,9 +47,9 @@ const Content = () => {
 
     return(
         <div>
-            <div>Titel: {content.title} <input type='text' value={newTitle} placeholder={t('neuer Titel')} onChange={e => setNewTitle(e.target.value)} /></div>
-            <div>Aufgabe: {content.task} <input type='text' value={newTask} placeholder={t('neue Aufgabe')} onChange={e => setNewTask(e.target.value)} /></div>
-            <div>Status: {content.statusDone ? t('fertig') : t('nicht fertig')}</div>
+            <div>Titel: {contents.title} <input type='text' value={newTitle} placeholder={t('neuer Titel')} onChange={e => setNewTitle(e.target.value)} /></div>
+            <div>Aufgabe: {contents.task} <input type='text' value={newTask} placeholder={t('neue Aufgabe')} onChange={e => setNewTask(e.target.value)} /></div>
+            <div>Status: {contents.statusDone ? t('fertig') : t('nicht fertig')}</div>
             <button onClick={changeItem}>{t("Ändern!")}</button>
         </div>
     )

@@ -30,7 +30,7 @@ public class TodoService {
         return todoRepository.findById(id);
     }
 
-    public void patchTodo(String id, TodoItem todoItem) {
+    public void patchTodo(String id) {
         Optional<TodoItem> optionalOfTodoItem = todoRepository.findById(id);
         if(optionalOfTodoItem.isPresent()){
             TodoItem currentTodo = optionalOfTodoItem.get();
@@ -39,15 +39,19 @@ public class TodoService {
             } else {
                 currentTodo.setStatusDone(true);
             }
-
-            if(!Objects.equals(todoItem.getTitle(), "")){
-                currentTodo.setTitle(todoItem.getTitle());
-            }
-
-            if(!Objects.equals(todoItem.getTask(), "")){
-                currentTodo.setTask(todoItem.getTask());
-            }
             todoRepository.save(currentTodo);
+        }
+    }
+
+    public void changeContent(String id, TodoItem todoItem) {
+        Optional<TodoItem> optionalOfTodoItem = todoRepository.findById(id);
+        if(optionalOfTodoItem.isPresent()) {
+            TodoItem todoFromDB = optionalOfTodoItem.get();
+            todoFromDB.setId(id);
+            todoFromDB.setStatusDone(todoItem.isStatusDone());
+            todoFromDB.setTitle(todoItem.getTitle());
+            todoFromDB.setTask(todoItem.getTask());
+            todoRepository.save(todoFromDB);
         }
     }
 
@@ -60,26 +64,10 @@ public class TodoService {
         }
     }*/
 
-
 /*    public List<TodoItem> listAllDoneItem() {
         return repoTodos.listAllItem().stream()
                 .filter(e -> e.isStatusDone())
                 .toList();
-    }*/
-
-
-/*    public void changeOneItem(TodoItem changedItem) {
-
-
-        listOneItem(changedItem.getId()).setTitle(changedItem.getTitle());
-        listOneItem(changedItem.getId()).setTask(changedItem.getTask());
-    }*/
-
-
- /*   public void changeStatus(String id){
-
-
-
     }*/
 
 }
