@@ -25,8 +25,8 @@ const Content = () => {
     }, [id.todoId])
 
     const changeItem = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app`, {
-            method: "PUT",
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app${id.todoId}`, {
+            method: "PATCH",
             body: JSON.stringify({
                 "id": id.todoId,
                 "title": newTitle,

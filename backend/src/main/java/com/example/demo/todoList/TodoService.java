@@ -34,11 +34,9 @@ public class TodoService {
         Optional<TodoItem> optionalOfTodoItem = todoRepository.findById(id);
         if(optionalOfTodoItem.isPresent()){
             TodoItem currentTodo = optionalOfTodoItem.get();
-            if(todoItem.isStatusDone()){
+            if(currentTodo.isStatusDone()){
                 currentTodo.setStatusDone(false);
-            }
-
-            if(!todoItem.isStatusDone()) {
+            } else {
                 currentTodo.setStatusDone(true);
             }
 
