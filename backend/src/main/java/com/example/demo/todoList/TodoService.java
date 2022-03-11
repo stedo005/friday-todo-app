@@ -1,11 +1,9 @@
 package com.example.demo.todoList;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -55,19 +53,14 @@ public class TodoService {
         }
     }
 
-/*    public void deleteAllDone() {
-        List<TodoItem> doneItem = repoTodos.listAllItem().stream()
-                .filter(e -> e.isStatusDone())
-                .toList();
-        for (TodoItem todoItem : doneItem) {
-            repoTodos.deleteItem(todoItem.getId());
-        }
-    }*/
+    public List<TodoItem> listAllDone() {
+        return todoRepository.findAllByStatusDoneTrue();
+    }
 
-/*    public List<TodoItem> listAllDoneItem() {
-        return repoTodos.listAllItem().stream()
-                .filter(e -> e.isStatusDone())
-                .toList();
-    }*/
+    public void deleteAllDone() {
+        for (TodoItem todoItem : listAllDone()) {
+            deleteItem(todoItem.getId());
+        }
+    }
 
 }

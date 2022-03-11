@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/todo-app")
@@ -45,15 +44,16 @@ public class TodoController {
         todoService.changeContent(id, todoItem);
     }
 
-/*    @DeleteMapping("/deleteAllDone")
+    @GetMapping("/listAllDoneItem")
+    public List<TodoItem> listAllDone() {
+        return todoService.listAllDone();
+    }
+
+    @DeleteMapping("/deleteAllDone")
     public void deleteAllDone() {
         todoService.deleteAllDone();
-    }*/
+    }
 
 
- /*   @GetMapping("/listAllDoneItem")
-    public List<TodoItem> listAllDone() {
-        return todoService.listAllDoneItem();
-    }*/
 
 }
