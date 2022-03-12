@@ -14,8 +14,8 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public void addItem(@RequestBody TodoItem todoItem) {
-        todoService.addItem(todoItem);
+    public TodoItem addItem(@RequestBody TodoItem todoItem) {
+        return todoService.addItem(todoItem);
     }
 
     @DeleteMapping ("/{idItem}")
