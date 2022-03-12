@@ -27,7 +27,7 @@ public class TodoService {
         return todoRepository.findById(id);
     }
 
-    public void patchTodo(String id) {
+    public void changeStatus(String id) {
         Optional<TodoItem> optionalOfTodoItem = todoRepository.findById(id);
         if(optionalOfTodoItem.isPresent()){
             TodoItem currentTodo = optionalOfTodoItem.get();

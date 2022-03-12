@@ -34,8 +34,8 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}")
-    public void patchTodo(@PathVariable String id) {
-        todoService.patchTodo(id);
+    public void changeStatus(@PathVariable String id) {
+        todoService.changeStatus(id);
     }
 
     @PutMapping("/{id}")
