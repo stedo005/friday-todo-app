@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 
@@ -50,7 +50,9 @@ const Content = () => {
             <div>Titel: {contents.title} <input type='text' value={newTitle} placeholder={t('neuer Titel')} onChange={e => setNewTitle(e.target.value)} /></div>
             <div>Aufgabe: {contents.task} <input type='text' value={newTask} placeholder={t('neue Aufgabe')} onChange={e => setNewTask(e.target.value)} /></div>
             <div>Status: {contents.statusDone ? t('fertig') : t('nicht fertig')}</div>
-            <button onClick={changeItem}>{t("Ändern!")}</button>
+            <Link to={'../todolist'}>
+                <button onClick={changeItem}>{t("Ändern!")}</button>
+            </Link>
         </div>
     )
 }
