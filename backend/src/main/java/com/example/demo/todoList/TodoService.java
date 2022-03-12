@@ -2,7 +2,6 @@ package com.example.demo.todoList;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -12,8 +11,8 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
 
-    public void addItem(TodoItem todoItem) {
-        todoRepository.save(todoItem);
+    public TodoItem addItem(TodoItem todoItem) {
+        return todoRepository.save(todoItem);
     }
 
     public void deleteItem(String idItem) {
