@@ -4,6 +4,7 @@ import com.example.demo.todoList.user.UserDetails;
 import com.example.demo.todoList.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,8 @@ public class TodoService {
     private final UserRepository userRepository;
 
     public TodoItem addItem(TodoItem todoItem, String email) {
-        Optional<UserDetails> user = userRepository.findByEMail(email);
+        Optional<UserDetails> user = userRepository.findByEmail(email);
+        todoItem.setUserId(user.get().getId());
         return todoRepository.save(todoItem);
     }
 
@@ -67,7 +69,7 @@ public class TodoService {
     }
 
     public List<TodoItem> findAllByUserId(String email) {
-        Optional<UserDetails> user = userRepository.findByEMail(email);
+        Optional<UserDetails> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
             return todoRepository.findAllByUserId(user.get().getId());
         }
