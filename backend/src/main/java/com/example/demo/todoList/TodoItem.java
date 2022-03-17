@@ -16,4 +16,5 @@ public class TodoItem {
     private String task = "";
     private boolean statusDone;
 
+
 }

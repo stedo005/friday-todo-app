@@ -1,10 +1,14 @@
 package com.example.demo.todoList.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +18,9 @@ public class MongoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return  userService.findByUsername(username)
+                .map(userDocument -> new User(userDocument.getUsername(), userDocument.getPassword(), List.of(new SimpleGrantedAuthority("ROLE_" + userDocument.getRole()))))
+                .orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
     }
 
 }

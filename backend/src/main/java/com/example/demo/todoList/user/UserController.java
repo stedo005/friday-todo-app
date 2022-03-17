@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping
     public UserDetails createUser(@RequestBody UserDetails user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userService.createUser(user);
     }
 
