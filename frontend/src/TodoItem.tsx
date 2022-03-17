@@ -15,7 +15,18 @@ const TodoItem = (props: TodoItemProps) => {
     }
 
     const setStatusDone = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {method: "PUT"})
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`,{
+            method: "PATCH",
+            body: JSON.stringify({
+                "id": props.todo.id,
+                "title": props.todo.title,
+                "task": props.todo.task,
+                "statusDone": props.todo.statusDone
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
             .then(() => props.onItemChange())
     }
 

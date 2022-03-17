@@ -1,5 +1,7 @@
 FROM openjdk:17
+VOLUME /tmp
+ARG JAR_FILE
 
 ADD backend/target/todo-app-backend-0.0.1-SNAPSHOT.jar app.jar
 
-CMD [ "sh", "-c", "java -jar /app.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=docker","-jar","/app.jar"]

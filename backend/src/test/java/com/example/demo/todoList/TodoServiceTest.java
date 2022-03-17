@@ -4,152 +4,149 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
 
 class TodoServiceTest {
 
     @Test
-    @DisplayName("should return Objects in repo")
-    void test() {
-
-        TodoItem point1 = new TodoItem();
-        TodoItem point2 = new TodoItem();
-        TodoItem point3 = new TodoItem();
-
-        point1.setTitle("Punkt 1");
-        point2.setTitle("Punkt 2");
-        point3.setTitle("Punkt 3");
-
-        List<TodoItem> repo = new ArrayList<>();
-        repo.add(point1);
-        repo.add(point2);
-        repo.add(point3);
-
-        RepoTodos repoTodos = new RepoTodos(repo);
-        TodoService service = new TodoService(repoTodos);
-
-        List<TodoItem> actual = service.listAllItem();
-
-        assertEquals(repo, actual);
-
-    }
-
-    @Test
-    @DisplayName("should return searched todoItem")
+    @DisplayName("should add new Item")
     void test1() {
 
-        TodoItem point1 = new TodoItem();
-        TodoItem point2 = new TodoItem();
-        TodoItem point3 = new TodoItem();
+        TodoItem itemToSave = new TodoItem();
+        itemToSave.setTitle("hallo");
+        itemToSave.setStatusDone(true);
 
-        point1.setTitle("Punkt 1");
-        point2.setTitle("Punkt 2");
-        point3.setTitle("Punkt 3");
+        TodoItem itemSaved = new TodoItem();
+        itemSaved.setId("1");
+        itemSaved.setTitle("hallo");
+        itemSaved.setStatusDone(false);
 
-        List<TodoItem> repo = new ArrayList<>();
+        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+        Mockito.when(mockRepo.save(itemToSave)).thenReturn(itemSaved);
 
-        RepoTodos repoTodos = new RepoTodos(repo);
-        TodoService service = new TodoService(repoTodos);
+        TodoService service = new TodoService(mockRepo);
+        TodoItem actual = service.addItem(itemToSave);
 
-        service.addItem(point1);
-        service.addItem(point2);
-        service.addItem(point3);
+        Assertions.assertThat(actual).isSameAs(itemSaved);
 
-        TodoItem actual = service.listOneItem(point1.getId());
-
-        assertEquals(point1, actual);
-
-    }
+}
 
     @Test
-    @DisplayName("should set statusDone true")
+    @DisplayName("should delete 1 item")
     void test2() {
 
-        TodoItem point1 = new TodoItem();
         TodoItem point2 = new TodoItem();
-        TodoItem point3 = new TodoItem();
 
-        point1.setTitle("Punkt 1");
         point2.setTitle("Punkt 2");
-        point3.setTitle("Punkt 3");
 
-        List<TodoItem> repo = new ArrayList<>();
-
-        RepoTodos repoTodos = new RepoTodos(repo);
-        TodoService service = new TodoService(repoTodos);
-
-        service.addItem(point1);
-        service.addItem(point2);
-        service.addItem(point3);
-
-        service.changeStatus(point1.getId());
-        boolean actual = point1.isStatusDone();
-        assertTrue(actual);
+        TodoRepository mockedRepo = Mockito.mock(TodoRepository.class);
+        mockedRepo.deleteById(point2.getId());
+        Mockito.verify(mockedRepo).deleteById(point2.getId());
 
     }
 
     @Test
-    @DisplayName("should delete 1 todoItem")
+    @DisplayName("should list all Item")
     void test3() {
 
-        TodoItem point1 = new TodoItem();
-        TodoItem point2 = new TodoItem();
-        TodoItem point3 = new TodoItem();
+        TodoItem item1 = new TodoItem();
+        TodoItem item2 = new TodoItem();
 
-        point1.setTitle("Punkt 1");
-        point2.setTitle("Punkt 2");
-        point3.setTitle("Punkt 3");
+        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+        Mockito.when(mockRepo.findAll()).thenReturn(List.of(item1, item2));
 
-        List<TodoItem> repo = new ArrayList<>();
-        RepoTodos repoTodos = new RepoTodos(repo);
-        TodoService service = new TodoService(repoTodos);
-        service.addItem(point1);
-        service.addItem(point2);
-        service.addItem(point3);
+        TodoService service = new TodoService(mockRepo);
+        List<TodoItem> actual = service.listAllItem();
 
-        service.deleteItem(point2.getId());
-
-        List<TodoItem> actual = repo;
-
-        Assertions.assertThat(actual).doesNotContain(point2);
+        Assertions.assertThat(actual.size()).isEqualTo(2);
 
     }
 
     @Test
-    @DisplayName("Mockito delete 1 item")
+    @DisplayName("should list one Item")
     void test4() {
 
-        TodoItem point1 = new TodoItem();
-        TodoItem point2 = new TodoItem();
-        TodoItem point3 = new TodoItem();
+        TodoItem item = new TodoItem();
+        item.setId("1");
 
-        point1.setTitle("Punkt 1");
-        point2.setTitle("Punkt 2");
-        point3.setTitle("Punkt 3");
+        TodoRepository mockedRepo = Mockito.mock(TodoRepository.class);
+        Mockito.when(mockedRepo.findById("1")).thenReturn(Optional.of(item));
 
-        RepoTodos mockedRepo = Mockito.mock(RepoTodos.class);
+        TodoService service = new TodoService(mockedRepo);
 
-        mockedRepo.deleteItem(point2.getId());
+        Optional<TodoItem> actual = service.listOneItem("1");
 
-        Mockito.verify(mockedRepo).deleteItem(point2.getId());
+        Assertions.assertThat(actual).contains(item);
+    }
+
+    @Test
+    @DisplayName("should change Status for 1 item")
+    void test5() {
+
+        TodoItem itemToChange = new TodoItem();
+        itemToChange.setId("1");
+        itemToChange.setStatusDone(false);
+
+        Optional<TodoItem> actual = Optional.of(itemToChange);
+
+        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+        Mockito.when(mockRepo.findById("1")).thenReturn(actual);
+        TodoService service = new TodoService(mockRepo);
+
+        service.changeStatus(actual.get().getId());
+        Assertions.assertThat(actual.get().isStatusDone()).isTrue();
 
     }
 
     @Test
-    @DisplayName("Mockito get 1 Item")
-    void test5() {
+    @DisplayName("should change content of 1 item")
+    void test6() {
 
-        RepoTodos mockedRepo = Mockito.mock(RepoTodos.class);
-        Mockito.when(mockedRepo.listOneItem("1234"))
-                .thenReturn(new TodoItem());
+        TodoItem itemToChange = new TodoItem();
+        itemToChange.setId("1");
+        itemToChange.setTitle("Putzen");
+        itemToChange.setTask("heute");
+        itemToChange.setStatusDone(false);
 
-        TodoService service = new TodoService(mockedRepo);
-        TodoItem actual = service.listOneItem("1234");
-        assertNotNull(actual);
+        TodoItem changedItem = new TodoItem();
+        changedItem.setId("1");
+        changedItem.setTitle("Putzen");
+        changedItem.setTask("morgen");
+        changedItem.setStatusDone(false);
+
+        Optional<TodoItem> opItemToChange = Optional.of(itemToChange);
+
+        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+        Mockito.when(mockRepo.findById("1")).thenReturn(opItemToChange);
+        TodoService service = new TodoService(mockRepo);
+
+        service.changeContent("1", changedItem);
+
+        Assertions.assertThat(itemToChange.getTask()).isEqualTo("morgen");
+
+    }
+
+    @Test
+    @DisplayName("should list all done item")
+    void test7() {
+
+        TodoItem item1 = new TodoItem();
+        TodoItem item2 = new TodoItem();
+        TodoItem item3 = new TodoItem();
+
+        item1.setStatusDone(true);
+        item2.setStatusDone(false);
+        item3.setStatusDone(false);
+
+        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+        Mockito.when(mockRepo.findAllByStatusDoneTrue()).thenReturn(List.of(item1));
+
+        TodoService service = new TodoService(mockRepo);
+        List<TodoItem> actual = service.listAllDone();
+
+        Assertions.assertThat(actual.size()).isEqualTo(1);
+        Assertions.assertThat(actual.get(0).isStatusDone()).isTrue();
 
     }
 
