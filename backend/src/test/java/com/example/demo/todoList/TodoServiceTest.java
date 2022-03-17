@@ -1,14 +1,18 @@
 package com.example.demo.todoList;
 
+import com.example.demo.todoList.user.UserDetails;
+import com.example.demo.todoList.user.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 class TodoServiceTest {
-/*
+
 
     @Test
     @DisplayName("should add new Item")
@@ -23,11 +27,17 @@ class TodoServiceTest {
         itemSaved.setTitle("hallo");
         itemSaved.setStatusDone(false);
 
+        UserDetails user = new UserDetails();
+        user.setId("1");
+
+        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
+        Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
+
         TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
         Mockito.when(mockRepo.save(itemToSave)).thenReturn(itemSaved);
 
-        TodoService service = new TodoService(mockRepo);
-        TodoItem actual = service.addItem(itemToSave);
+        TodoService service = new TodoService(mockRepo, mockUserRepo);
+        TodoItem actual = service.addItem(itemToSave, "123");
 
         Assertions.assertThat(actual).isSameAs(itemSaved);
 
@@ -46,7 +56,7 @@ class TodoServiceTest {
         Mockito.verify(mockedRepo).deleteById(point2.getId());
 
     }
-
+/*
     @Test
     @DisplayName("should list all Item")
     void test3() {
