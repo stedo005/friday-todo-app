@@ -3,6 +3,8 @@ package com.example.demo.todoList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -13,8 +15,9 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public TodoItem addItem(@RequestBody TodoItem todoItem) {
-        return todoService.addItem(todoItem);
+    public TodoItem addItem(@RequestBody TodoItem todoItem, Principal principal) {
+        String email = principal.getName();
+        return todoService.addItem(todoItem, email);
     }
 
     @DeleteMapping ("/{idItem}")

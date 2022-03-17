@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 class TodoServiceTest {
+/*
 
     @Test
     @DisplayName("should add new Item")
@@ -149,5 +150,6 @@ class TodoServiceTest {
         Assertions.assertThat(actual.get(0).isStatusDone()).isTrue();
 
     }
+*/
 
 }

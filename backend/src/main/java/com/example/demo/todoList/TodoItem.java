@@ -15,6 +15,6 @@ public class TodoItem {
     private String title ="";
     private String task = "";
     private boolean statusDone;
-
+    private String userId;
 
 }

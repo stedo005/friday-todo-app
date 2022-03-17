@@ -1,5 +1,7 @@
 package com.example.demo.todoList;
 
+import com.example.demo.todoList.user.UserDetails;
+import com.example.demo.todoList.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -10,8 +12,10 @@ import java.util.Optional;
 public class TodoService {
 
     private final TodoRepository todoRepository;
+    private final UserRepository userRepository;
 
-    public TodoItem addItem(TodoItem todoItem) {
+    public TodoItem addItem(TodoItem todoItem, String email) {
+        Optional<UserDetails> user = userRepository.findByEMail(email);
         return todoRepository.save(todoItem);
     }
 
@@ -60,6 +64,14 @@ public class TodoService {
         for (TodoItem todoItem : listAllDone()) {
             deleteItem(todoItem.getId());
         }
+    }
+
+    public List<TodoItem> findAllByUserId(String email) {
+        Optional<UserDetails> user = userRepository.findByEMail(email);
+        if (user.isPresent()) {
+            return todoRepository.findAllByUserId(user.get().getId());
+        }
+        throw new IllegalArgumentException("user doesnt exist");
     }
 
 }
