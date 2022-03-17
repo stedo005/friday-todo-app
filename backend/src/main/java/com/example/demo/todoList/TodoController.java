@@ -7,7 +7,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/todo-app")
-@CrossOrigin
 @RequiredArgsConstructor
 public class TodoController {
 
