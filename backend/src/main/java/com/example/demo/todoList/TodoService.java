@@ -58,22 +58,12 @@ public class TodoService {
         }
     }
 
-    public List<TodoItem> listAllDone() {
-        return todoRepository.findAllByStatusDoneTrue();
+    public List<TodoItem> listAllDone(Principal principal) {
+        return todoRepository.findAllByStatusDoneTrueAndUserId(getUserId(principal));
     }
 
-    public void deleteAllDone() {
-        for (TodoItem todoItem : listAllDone()) {
-            deleteItem(todoItem.getId());
-        }
-    }
-
-    public List<TodoItem> findAllByUserId(String email) {
-        Optional<UserDetails> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            return todoRepository.findAllByUserId(user.get().getId());
-        }
-        throw new IllegalArgumentException("user doesnt exist");
+    public void deleteAllDone(Principal principal) {
+        todoRepository.deleteAllByStatusDoneTrueAndUserId(getUserId(principal));
     }
 
     private String getUserId(Principal principal) {

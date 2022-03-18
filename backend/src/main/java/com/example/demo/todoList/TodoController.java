@@ -45,13 +45,13 @@ public class TodoController {
     }
 
     @GetMapping("/listAllDoneItem")
-    public List<TodoItem> listAllDone() {
-        return todoService.listAllDone();
+    public List<TodoItem> listAllDone(Principal principal) {
+        return todoService.listAllDone(principal);
     }
 
     @DeleteMapping("/deleteAllDone")
-    public void deleteAllDone() {
-        todoService.deleteAllDone();
+    public void deleteAllDone(Principal principal) {
+        todoService.deleteAllDone(principal);
     }
 
 

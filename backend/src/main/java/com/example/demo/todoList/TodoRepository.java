@@ -9,8 +9,9 @@ import java.util.List;
 @Repository
 public interface TodoRepository extends MongoRepository<TodoItem, String> {
 
-    List<TodoItem> findAllByStatusDoneTrue();
+    List<TodoItem> findAllByStatusDoneTrueAndUserId(String userId);
     List<TodoItem> findAllByUserId(String userId);
     void deleteTodoItemByIdAndUserId(String id, String userId);
+    void deleteAllByStatusDoneTrueAndUserId(String userId);
 
 }
