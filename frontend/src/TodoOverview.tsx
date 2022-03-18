@@ -35,6 +35,17 @@ const TodoOverview = () => {
             .catch((err: Error) => {setErrMsg(err.message)})
     }, [t, token])
 
+    const listAllDone = useCallback(() => {
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllDoneItem`, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+            .then(response => {return response.json()})
+            .then((responseBody: Array<Todo>) => {setData((responseBody))})
+    },[token])
+
     useEffect(() => {
         localStorage.setItem('searchField', search)
         localStorage.setItem('title', titleInput)
@@ -42,7 +53,7 @@ const TodoOverview = () => {
 
     useEffect(() => {
         doneSearch ? listAllDone() : fetchAll()
-    }, [doneSearch, fetchAll])
+    }, [doneSearch, fetchAll, listAllDone])
 
     useEffect(() => {fetchAll()}, [fetchAll])
 
@@ -69,17 +80,6 @@ const TodoOverview = () => {
             .then(() => setTitleInput(''))
             .then(() => setTaskInput(''))
             .catch((err: Error) => {setErrMsg(err.message)})
-    }
-
-    const listAllDone = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllDoneItem`, {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-            .then(response => {return response.json()})
-            .then((responseBody: Array<Todo>) => {setData((responseBody))})
     }
 
     const deleteAllDone = () => {
