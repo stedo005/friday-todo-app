@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,8 @@ class TodoServiceTest {
         itemSaved.setStatusDone(false);
 
         UserDetails user = new UserDetails();
-        user.setId("1");
+        user.setId("12");
+        user.setEmail("test");
 
         UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
         Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
@@ -37,8 +37,9 @@ class TodoServiceTest {
         Mockito.when(mockRepo.save(itemToSave)).thenReturn(itemSaved);
 
         TodoService service = new TodoService(mockRepo, mockUserRepo);
-        TodoItem actual = service.addItem(itemToSave, "123");
+        TodoItem actual = service.addItem(itemToSave, "test");
 
+        Mockito.verify(mockRepo).save(itemToSave);
         Assertions.assertThat(actual).isSameAs(itemSaved);
 
 }
@@ -56,7 +57,6 @@ class TodoServiceTest {
         Mockito.verify(mockedRepo).deleteById(point2.getId());
 
     }
-/*
     @Test
     @DisplayName("should list all Item")
     void test3() {
@@ -64,16 +64,19 @@ class TodoServiceTest {
         TodoItem item1 = new TodoItem();
         TodoItem item2 = new TodoItem();
 
+        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
         TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+
         Mockito.when(mockRepo.findAll()).thenReturn(List.of(item1, item2));
 
-        TodoService service = new TodoService(mockRepo);
+        TodoService service = new TodoService(mockRepo, mockUserRepo);
         List<TodoItem> actual = service.listAllItem();
 
         Assertions.assertThat(actual.size()).isEqualTo(2);
 
     }
 
+/*
     @Test
     @DisplayName("should list one Item")
     void test4() {
