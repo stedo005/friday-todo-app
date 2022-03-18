@@ -13,6 +13,8 @@ const Content = () => {
 
     const {t} = useTranslation()
 
+    const [token, setToken] = useState(localStorage.getItem("token"))
+
     const [contents, setContents] = useState({} as Contents);
     const id = useParams();
 
@@ -20,7 +22,12 @@ const Content = () => {
     const [newTask, setNewTask] = useState('')
 
     const fetchContent = useCallback(() => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
             .then(response => {return response.json()})
             .then((responseBody: any) => {setContents(responseBody)})
     }, [id.todoId])
@@ -35,7 +42,8 @@ const Content = () => {
                 "statusDone": `${contents.statusDone}`
             }),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
             }
         })
             .then(() => fetchContent())

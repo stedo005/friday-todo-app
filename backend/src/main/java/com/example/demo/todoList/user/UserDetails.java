@@ -10,9 +10,9 @@ public class UserDetails {
 
     @Id
     private String id;
-    private String username;
+    private String username = "";
     private String password;
     private String email;
-    private String role;
+    private String role = "USER";
 
 }

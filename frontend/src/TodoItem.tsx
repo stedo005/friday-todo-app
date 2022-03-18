@@ -1,6 +1,7 @@
 import "./TodoItem.css"
 import {Todo} from "./model";
 import {Link} from "react-router-dom";
+import {useState} from "react";
 
 interface TodoItemProps {
     todo: Todo
@@ -9,8 +10,15 @@ interface TodoItemProps {
 
 const TodoItem = (props: TodoItemProps) => {
 
+    const [token, setToken] = useState(localStorage.getItem("token"))
+
     const deleteItem = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {method: "DELETE"})
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
             .then(() => props.onItemChange())
     }
 
@@ -24,7 +32,8 @@ const TodoItem = (props: TodoItemProps) => {
                 "statusDone": props.todo.statusDone
             }),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
             }
         })
             .then(() => props.onItemChange())

@@ -72,14 +72,22 @@ const TodoOverview = () => {
     }
 
     const listAllDone = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllDoneItem`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllDoneItem`, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
             .then(response => {return response.json()})
             .then((responseBody: Array<Todo>) => {setData((responseBody))})
     }
 
     const deleteAllDone = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/deleteAllDone`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
         })
             .then(fetchAll)
     }
