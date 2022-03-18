@@ -7,6 +7,7 @@ import './i18n'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Content from './Content';
 import TodoOverview from "./TodoOverview";
+import Login from "./Login";
 
 
 ReactDOM.render(
@@ -17,6 +18,7 @@ ReactDOM.render(
                     <Route path="/" element={<App />}>
                         <Route path="todolist" element={<TodoOverview />}/>
                         <Route path="todolist/:todoId" element={<Content />} />
+                        <Route path="/" element={<Login />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
