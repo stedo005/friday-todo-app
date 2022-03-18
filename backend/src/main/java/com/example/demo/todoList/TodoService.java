@@ -15,21 +15,18 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
-    private final Principal p;
 
-    public TodoItem addItem(TodoItem todoItem, String email) {
-        Optional<UserDetails> user = userRepository.findByEmail(email);
-        todoItem.setUserId(user.get().getId());
+    public TodoItem addItem(TodoItem todoItem, Principal principal) {
+        todoItem.setUserId(getUserId(principal));
         return todoRepository.save(todoItem);
     }
 
-    public void deleteItem(String idItem) {
-        todoRepository.deleteById(idItem);
+    public void deleteItem(String idItem, Principal principal) {
+        todoRepository.deleteTodoItemByIdAndUserId(idItem, getUserId(principal));
     }
 
-    public List<TodoItem> listAllItem() {
-
-        return todoRepository.findAll();
+    public List<TodoItem> listAllItem(Principal principal) {
+        return todoRepository.findAllByUserId(getUserId(principal));
     }
 
     public Optional<TodoItem> listOneItem(String id) {
@@ -77,6 +74,10 @@ public class TodoService {
             return todoRepository.findAllByUserId(user.get().getId());
         }
         throw new IllegalArgumentException("user doesnt exist");
+    }
+
+    private String getUserId(Principal principal) {
+        return userRepository.findByEmail(principal.getName()).get().getId();
     }
 
 }

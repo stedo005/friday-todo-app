@@ -16,18 +16,17 @@ public class TodoController {
 
     @PostMapping
     public TodoItem addItem(@RequestBody TodoItem todoItem, Principal principal) {
-        String email = principal.getName();
-        return todoService.addItem(todoItem, email);
+        return todoService.addItem(todoItem, principal);
     }
 
     @DeleteMapping ("/{idItem}")
-    public void deleteItem(@PathVariable String idItem) {
-        todoService.deleteItem(idItem);
+    public void deleteItem(@PathVariable String idItem, Principal principal) {
+        todoService.deleteItem(idItem, principal);
     }
 
     @GetMapping("/listAllItem")
-    public List<TodoItem> listAllItem() {
-        return todoService.listAllItem();
+    public List<TodoItem> listAllItem(Principal principal) {
+        return todoService.listAllItem(principal);
     }
 
     @GetMapping("/{id}")
