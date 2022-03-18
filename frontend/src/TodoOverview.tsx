@@ -15,7 +15,7 @@ const TodoOverview = () => {
     const [search, setSearch] = useState(localStorage.getItem('searchField') ?? '');
     const [errMsg, setErrMsg] = useState('');
     const [doneSearch, setDoneSearch] = useState(false)
-    const [token, setToken] = useState(localStorage.getItem("token"))
+    const token = localStorage.getItem("token")
 
     const fetchAll = useCallback(() => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`,{
@@ -33,7 +33,7 @@ const TodoOverview = () => {
             .then((responseBody: Array<Todo>) => {setData(responseBody)})
             .then(() => setDoneSearch(false))
             .catch((err: Error) => {setErrMsg(err.message)})
-    }, [t])
+    }, [t, token])
 
     useEffect(() => {
         localStorage.setItem('searchField', search)
@@ -42,7 +42,7 @@ const TodoOverview = () => {
 
     useEffect(() => {
         doneSearch ? listAllDone() : fetchAll()
-    }, [doneSearch,fetchAll])
+    }, [doneSearch, fetchAll])
 
     useEffect(() => {fetchAll()}, [fetchAll])
 

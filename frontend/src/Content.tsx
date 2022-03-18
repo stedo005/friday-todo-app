@@ -13,7 +13,7 @@ const Content = () => {
 
     const {t} = useTranslation()
 
-    const [token, setToken] = useState(localStorage.getItem("token"))
+    const token = localStorage.getItem("token")
 
     const [contents, setContents] = useState({} as Contents);
     const id = useParams();
@@ -30,7 +30,7 @@ const Content = () => {
         })
             .then(response => {return response.json()})
             .then((responseBody: any) => {setContents(responseBody)})
-    }, [id.todoId])
+    }, [id.todoId, token])
 
     const changeItem = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`, {

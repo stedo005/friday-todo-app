@@ -12,7 +12,7 @@ import java.util.Optional;
 
 class TodoServiceTest {
 
-
+/*
     @Test
     @DisplayName("should add new Item")
     void test1() {
@@ -74,7 +74,7 @@ class TodoServiceTest {
 
         Assertions.assertThat(actual.size()).isEqualTo(2);
 
-    }
+    }*/
 
 /*
     @Test

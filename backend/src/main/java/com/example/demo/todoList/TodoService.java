@@ -5,6 +5,7 @@ import com.example.demo.todoList.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
+    private final Principal p;
 
     public TodoItem addItem(TodoItem todoItem, String email) {
         Optional<UserDetails> user = userRepository.findByEmail(email);
@@ -26,6 +28,7 @@ public class TodoService {
     }
 
     public List<TodoItem> listAllItem() {
+
         return todoRepository.findAll();
     }
 
