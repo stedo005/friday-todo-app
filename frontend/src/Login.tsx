@@ -5,7 +5,6 @@ const Login = () => {
 
     const [eMail, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [token, setToken] = useState("")
 
     const login = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
@@ -24,8 +23,7 @@ const Login = () => {
                 }
                 return response.text()
             })
-            .then((responseBody: string) => {setToken(responseBody)})
-            .then(() => localStorage.setItem("token", token))
+            .then((responseBody: string) => {localStorage.setItem("token", responseBody)})
     }
 
     return (
@@ -34,7 +32,6 @@ const Login = () => {
             <input type={"text"} placeholder={"e-Mail"} value={eMail} onChange={e => setEmail(e.target.value)}/><br/>
             <input type={"text"} placeholder={"password"} value={password} onChange={e => setPassword(e.target.value)}/><br/>
             <button onClick={login}>Login</button>
-            <p>token: {token}</p>
         </div>
 
     )

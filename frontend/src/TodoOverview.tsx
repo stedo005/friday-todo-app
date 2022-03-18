@@ -15,9 +15,15 @@ const TodoOverview = () => {
     const [search, setSearch] = useState(localStorage.getItem('searchField') ?? '');
     const [errMsg, setErrMsg] = useState('');
     const [doneSearch, setDoneSearch] = useState(false)
+    const [token, setToken] = useState(localStorage.getItem("token"))
 
     const fetchAll = useCallback(() => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`,{
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(t('Etwas ist schief gelaufen!'))
@@ -50,7 +56,8 @@ const TodoOverview = () => {
                 "task": taskInput
             }),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
             }
         })
             .then(response => {
