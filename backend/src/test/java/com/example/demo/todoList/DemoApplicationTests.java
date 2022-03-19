@@ -30,6 +30,8 @@ class DemoApplicationTests {
 		item2.setTitle("Waschen");
 		item3.setStatusDone(true);
 
+
+
 		ResponseEntity<TodoItem> postResponse = restTemplate.postForEntity("/todo-app", item1, TodoItem.class);
 		assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(postResponse.getBody().getTitle()).isEqualTo("Putzen");

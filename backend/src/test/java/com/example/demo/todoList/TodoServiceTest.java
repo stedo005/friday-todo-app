@@ -7,12 +7,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 class TodoServiceTest {
 
-/*
+
     @Test
     @DisplayName("should add new Item")
     void test1() {
@@ -30,6 +31,13 @@ class TodoServiceTest {
         user.setId("12");
         user.setEmail("test");
 
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
         UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
         Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
 
@@ -37,26 +45,43 @@ class TodoServiceTest {
         Mockito.when(mockRepo.save(itemToSave)).thenReturn(itemSaved);
 
         TodoService service = new TodoService(mockRepo, mockUserRepo);
-        TodoItem actual = service.addItem(itemToSave, "test");
+        TodoItem actual = service.addItem(itemToSave, principal);
 
         Mockito.verify(mockRepo).save(itemToSave);
         Assertions.assertThat(actual).isSameAs(itemSaved);
 
-}
+    }
 
     @Test
     @DisplayName("should delete 1 item")
     void test2() {
 
         TodoItem point2 = new TodoItem();
-
         point2.setTitle("Punkt 2");
 
+        UserDetails user = new UserDetails();
+        user.setId("12");
+        user.setEmail("test");
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
+        Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
+
         TodoRepository mockedRepo = Mockito.mock(TodoRepository.class);
-        mockedRepo.deleteById(point2.getId());
-        Mockito.verify(mockedRepo).deleteById(point2.getId());
+
+        TodoService service = new TodoService(mockedRepo, mockUserRepo);
+        service.deleteItem(point2.getId(), principal);
+
+        Mockito.verify(mockedRepo).deleteTodoItemByIdAndUserId(point2.getId(), "12");
 
     }
+
     @Test
     @DisplayName("should list all Item")
     void test3() {
@@ -64,19 +89,30 @@ class TodoServiceTest {
         TodoItem item1 = new TodoItem();
         TodoItem item2 = new TodoItem();
 
-        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
-        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+        UserDetails user = new UserDetails();
+        user.setId("12");
+        user.setEmail("test");
 
-        Mockito.when(mockRepo.findAll()).thenReturn(List.of(item1, item2));
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
+        Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
+
+        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+        Mockito.when(mockRepo.findAllByUserId("12")).thenReturn(List.of(item1, item2));
 
         TodoService service = new TodoService(mockRepo, mockUserRepo);
-        List<TodoItem> actual = service.listAllItem();
+        List<TodoItem> actual = service.listAllItem(principal);
 
         Assertions.assertThat(actual.size()).isEqualTo(2);
 
-    }*/
+    }
 
-/*
     @Test
     @DisplayName("should list one Item")
     void test4() {
@@ -84,10 +120,24 @@ class TodoServiceTest {
         TodoItem item = new TodoItem();
         item.setId("1");
 
+        UserDetails user = new UserDetails();
+        user.setId("12");
+        user.setEmail("test");
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
+        Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
+
         TodoRepository mockedRepo = Mockito.mock(TodoRepository.class);
         Mockito.when(mockedRepo.findById("1")).thenReturn(Optional.of(item));
 
-        TodoService service = new TodoService(mockedRepo);
+        TodoService service = new TodoService(mockedRepo, mockUserRepo);
 
         Optional<TodoItem> actual = service.listOneItem("1");
 
@@ -102,11 +152,25 @@ class TodoServiceTest {
         itemToChange.setId("1");
         itemToChange.setStatusDone(false);
 
+        UserDetails user = new UserDetails();
+        user.setId("12");
+        user.setEmail("test");
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
+        Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
+
         Optional<TodoItem> actual = Optional.of(itemToChange);
 
         TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
         Mockito.when(mockRepo.findById("1")).thenReturn(actual);
-        TodoService service = new TodoService(mockRepo);
+        TodoService service = new TodoService(mockRepo, mockUserRepo);
 
         service.changeStatus(actual.get().getId());
         Assertions.assertThat(actual.get().isStatusDone()).isTrue();
@@ -129,11 +193,25 @@ class TodoServiceTest {
         changedItem.setTask("morgen");
         changedItem.setStatusDone(false);
 
+        UserDetails user = new UserDetails();
+        user.setId("12");
+        user.setEmail("test");
+
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
+        Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
+
         Optional<TodoItem> opItemToChange = Optional.of(itemToChange);
 
         TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
         Mockito.when(mockRepo.findById("1")).thenReturn(opItemToChange);
-        TodoService service = new TodoService(mockRepo);
+        TodoService service = new TodoService(mockRepo, mockUserRepo);
 
         service.changeContent("1", changedItem);
 
@@ -153,16 +231,29 @@ class TodoServiceTest {
         item2.setStatusDone(false);
         item3.setStatusDone(false);
 
-        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
-        Mockito.when(mockRepo.findAllByStatusDoneTrue()).thenReturn(List.of(item1));
+        UserDetails user = new UserDetails();
+        user.setId("12");
+        user.setEmail("test");
 
-        TodoService service = new TodoService(mockRepo);
-        List<TodoItem> actual = service.listAllDone();
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
+        Mockito.when(mockUserRepo.findByEmail("test")).thenReturn(Optional.of(user));
+
+        TodoRepository mockRepo = Mockito.mock(TodoRepository.class);
+        Mockito.when(mockRepo.findAllByStatusDoneTrueAndUserId("12")).thenReturn(List.of(item1));
+
+        TodoService service = new TodoService(mockRepo, mockUserRepo);
+        List<TodoItem> actual = service.listAllDone(principal);
 
         Assertions.assertThat(actual.size()).isEqualTo(1);
         Assertions.assertThat(actual.get(0).isStatusDone()).isTrue();
 
     }
-*/
 
 }

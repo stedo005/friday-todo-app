@@ -1,10 +1,12 @@
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 
 const Login = () => {
 
     const [eMail, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [token, setToken] = useState(localStorage.getItem("token") as string)
 
     const login = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
@@ -31,7 +33,7 @@ const Login = () => {
         <div>
             <input type={"text"} placeholder={"e-Mail"} value={eMail} onChange={e => setEmail(e.target.value)}/><br/>
             <input type={"text"} placeholder={"password"} value={password} onChange={e => setPassword(e.target.value)}/><br/>
-            <button onClick={login}>Login</button>
+            <Link to={'../todolist'}><button onClick={login}>Login</button></Link>
         </div>
 
     )

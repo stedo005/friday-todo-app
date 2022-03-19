@@ -9,6 +9,8 @@ import Content from './Content';
 import TodoOverview from "./TodoOverview";
 import Login from "./Login";
 import Registration from "./Registration";
+import ByeBye from "./ByeBye";
+import Hallo from "./Hallo";
 
 
 ReactDOM.render(
@@ -19,8 +21,10 @@ ReactDOM.render(
                     <Route path="/" element={<App />}>
                         <Route path="todolist" element={<TodoOverview />}/>
                         <Route path="todolist/:todoId" element={<Content />} />
-                        <Route path="/" element={<Login />} />
+                        <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Registration />} />
+                        <Route path="/byebye" element={<ByeBye />} />
+                        <Route path="/hallo" element={<Hallo />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

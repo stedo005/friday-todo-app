@@ -11,9 +11,11 @@ const App = () => {
         <div>
             <div>
                 <div>
-                    <button onClick={logout}>logout</button>
+                    <Link to={'todolist'}><button>Zeige alle todos</button></Link>
+                    <Link to={'login'}><button>Login</button></Link>
+                    <Link to={'register'}><button>Registrierung</button></Link>
+                    <Link to={'byebye'}><button onClick={logout}>Logout</button></Link>
                 </div>
-                <div><Link to={'todolist'}>Todo Liste</Link></div>
                 <Outlet />
             </div>
         </div>

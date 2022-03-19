@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 
 const Registration = () => {
@@ -30,7 +31,7 @@ const Registration = () => {
         <div>
             <input type={"text"} placeholder={"e-Mail"} value={eMail} onChange={e => setEmail(e.target.value)}/><br/>
             <input type={"text"} placeholder={"password"} value={password} onChange={e => setPassword(e.target.value)}/><br/>
-            <button onClick={login}>Register</button>
+            <Link to={'../hallo'}><button onClick={login}>Register</button></Link>
         </div>
 
     )
