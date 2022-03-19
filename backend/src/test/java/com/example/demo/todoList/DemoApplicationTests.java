@@ -32,6 +32,7 @@ class DemoApplicationTests {
 		item3.setStatusDone(true);
 
 		UserDetails user = new UserDetails();
+		user.setUsername("Steve");
 		user.setEmail("testMail");
 		user.setPassword("12345");
 
@@ -39,8 +40,8 @@ class DemoApplicationTests {
 		loginData.setUsername("testMail");
 		loginData.setPassword("12345");
 
-		ResponseEntity<UserDetails> responseUserDetails = restTemplate.postForEntity("/users", user, UserDetails.class);
-		assertThat(responseUserDetails.getBody().getEmail()).isEqualTo("testMail");
+		ResponseEntity<String> responseCreateUser = restTemplate.postForEntity("/users", user, String.class);
+		assertThat(responseCreateUser.getBody()).isEqualTo("Steve");
 
 		ResponseEntity<String> responseToken = restTemplate.postForEntity("/login", loginData, String.class);
 		assertThat(responseToken.getStatusCode()).isEqualTo(HttpStatus.OK);
