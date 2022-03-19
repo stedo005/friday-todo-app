@@ -2,10 +2,7 @@ package com.example.demo.todoList.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -19,6 +16,15 @@ public class UserController {
     public UserDetails createUser(@RequestBody UserDetails user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userService.createUser(user);
+    }
+
+    @GetMapping("/{eMail}")
+    public String getUser(@PathVariable String eMail) {
+        if (userService.findByEmail(eMail).isPresent()) {
+            return userService.findByEmail(eMail).get().getUsername();
+        } else {
+            throw new RuntimeException("Diesen User gibt es nicht!");
+        }
     }
 
 }

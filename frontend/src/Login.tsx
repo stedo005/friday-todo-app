@@ -7,6 +7,17 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
+    const getUser = () => {
+        fetch(`${process.env.REACT_APP_BASE_URL}/users/${eMail}`,{
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        })
+            .then(response => {return response.text()})
+            .then(responseBody => localStorage.setItem("username", responseBody))
+    }
+
     const login = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
             method: "POST",
@@ -25,6 +36,7 @@ const Login = () => {
                 return response.text()
             })
             .then((responseBody: string) => {localStorage.setItem("token", responseBody)})
+            .then(getUser)
             .then(() => navigate('../todolist'))
     }
 

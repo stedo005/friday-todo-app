@@ -94,6 +94,12 @@ const TodoOverview = () => {
 
     return(
         <div>
+            <div className={'center mt-3 mb-3'}>
+                <div hidden={token === ""}>
+                    Du bist eingeloggt als: {localStorage.getItem("username")}
+                </div>
+                <div hidden={token !== ""}>Du musst dich einloggen oder registrieren!</div>
+            </div>
             <div className="input-field">
                 <img data-testid='addBtn' onClick={addItem} className='btn-done' src={require('./icons/plus-circle.svg').default} alt={'check'}/>
                 <div className='px-2'>
