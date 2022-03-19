@@ -6,7 +6,6 @@ const Login = () => {
 
     const [eMail, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [token, setToken] = useState(localStorage.getItem("token") as string)
 
     const login = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/login`, {

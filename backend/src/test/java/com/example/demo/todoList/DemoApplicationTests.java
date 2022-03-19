@@ -1,12 +1,13 @@
 package com.example.demo.todoList;
 
+import com.example.demo.todoList.security.LoginData;
+import com.example.demo.todoList.user.UserDetails;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 import java.util.List;
 
@@ -30,23 +31,64 @@ class DemoApplicationTests {
 		item2.setTitle("Waschen");
 		item3.setStatusDone(true);
 
+		UserDetails user = new UserDetails();
+		user.setEmail("testMail");
+		user.setPassword("12345");
 
+		LoginData loginData = new LoginData();
+		loginData.setUsername("testMail");
+		loginData.setPassword("12345");
 
-		ResponseEntity<TodoItem> postResponse = restTemplate.postForEntity("/todo-app", item1, TodoItem.class);
-		assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(postResponse.getBody().getTitle()).isEqualTo("Putzen");
-		assertThat(postResponse.getBody().isStatusDone()).isFalse();
+		ResponseEntity<UserDetails> responseUserDetails = restTemplate.postForEntity("/users", user, UserDetails.class);
+		assertThat(responseUserDetails.getBody().getEmail()).isEqualTo("testMail");
 
-		ResponseEntity<TodoItem> getResponse = restTemplate.getForEntity("/todo-app/" + postResponse.getBody().getId(), TodoItem.class);
-		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertThat(getResponse.getBody().getTitle()).isEqualTo("Putzen");
+		ResponseEntity<String> responseToken = restTemplate.postForEntity("/login", loginData, String.class);
+		assertThat(responseToken.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-		ResponseEntity<List> secondGet = restTemplate.getForEntity("/todo-app/listAllItem", List.class);
-		assertThat(secondGet.getBody().size()).isEqualTo(1);
+		ResponseEntity<TodoItem> addItemResponse = restTemplate.exchange(
+				"/todo-app",
+				HttpMethod.POST,
+				new HttpEntity<>(item1, createHeaders(responseToken.getBody())),
+				TodoItem.class
+				);
 
-		ResponseEntity<List> thirdGet = restTemplate.getForEntity("/todo-app/listAllDoneItem", List.class);
-		assertThat(thirdGet.getBody().size()).isEqualTo(0);
+		assertThat(addItemResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(addItemResponse.getBody().getTitle()).isEqualTo("Putzen");
 
+		ResponseEntity<List> listAllItemResponse = restTemplate.exchange(
+				"/todo-app/listAllItem",
+				HttpMethod.GET,
+				new HttpEntity<>(createHeaders(responseToken.getBody())),
+				List.class
+		);
+
+		assertThat(listAllItemResponse.getBody().size()).isEqualTo(1);
+
+		ResponseEntity<TodoItem> listOneItemResponse = restTemplate.exchange(
+				"/todo-app/" + addItemResponse.getBody().getId(),
+				HttpMethod.GET,
+				new HttpEntity<>(createHeaders(responseToken.getBody())),
+				TodoItem.class
+		);
+
+		assertThat(listOneItemResponse.getBody().getTitle()).isEqualTo("Putzen");
+
+		ResponseEntity<List> listAllDoneItemResponse = restTemplate.exchange(
+				"/todo-app/listAllDoneItem",
+				HttpMethod.GET,
+				new HttpEntity<>(createHeaders(responseToken.getBody())),
+				List.class
+		);
+
+		assertThat(listAllDoneItemResponse.getBody().size()).isEqualTo(0);
+
+	}
+
+	private HttpHeaders createHeaders(String token) {
+		String authHeader = "Bearer " + token;
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", authHeader);
+		return headers;
 	}
 
 }
