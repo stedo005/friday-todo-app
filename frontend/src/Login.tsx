@@ -1,11 +1,11 @@
 import {useState} from "react";
-import {Link} from "react-router-dom";
-
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
 
     const [eMail, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
 
     const login = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
@@ -25,6 +25,7 @@ const Login = () => {
                 return response.text()
             })
             .then((responseBody: string) => {localStorage.setItem("token", responseBody)})
+            .then(() => navigate('../todolist'))
     }
 
     return (
@@ -32,7 +33,7 @@ const Login = () => {
         <div>
             <input type={"text"} placeholder={"e-Mail"} value={eMail} onChange={e => setEmail(e.target.value)}/><br/>
             <input type={"text"} placeholder={"password"} value={password} onChange={e => setPassword(e.target.value)}/><br/>
-            <Link to={'../todolist'}><button onClick={login}>Login</button></Link>
+                <button onClick={login}>Login</button>
         </div>
 
     )
