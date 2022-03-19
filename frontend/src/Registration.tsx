@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 
 const Registration = () => {
@@ -7,8 +7,10 @@ const Registration = () => {
     const [username, setUsername] =useState("")
     const [eMail, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [errMsg, setErrMsg] = useState("")
+    const navigate = useNavigate()
 
-    const login = () => {
+    const createUser = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/users`, {
             method: "POST",
             body: JSON.stringify({
@@ -26,6 +28,13 @@ const Registration = () => {
                 }
                 return response.text()
             })
+            .then(responseBody => {
+                if(responseBody === "Diese eMail-Adresse existiert schon") {
+                    setErrMsg("Diese eMail-Adresse existiert schon!")
+                    throw new Error()
+                }
+                navigate("../hallo")
+            })
     }
 
     return (
@@ -34,7 +43,8 @@ const Registration = () => {
             <input type={"text"} placeholder={"Name"} value={username} onChange={e => setUsername(e.target.value)}/><br/>
             <input type={"text"} placeholder={"e-Mail"} value={eMail} onChange={e => setEmail(e.target.value)}/><br/>
             <input type={"text"} placeholder={"password"} value={password} onChange={e => setPassword(e.target.value)}/><br/>
-            <Link to={'../hallo'}><button onClick={login}>Register</button></Link>
+            <button onClick={createUser}>Register</button>
+            <div>{errMsg}</div>
         </div>
 
     )

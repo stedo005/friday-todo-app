@@ -6,6 +6,7 @@ const Login = () => {
     const [eMail, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
+    const [errMsg, setErrMsg] = useState('')
 
     const getUser = () => {
         fetch(`${process.env.REACT_APP_BASE_URL}/users/${eMail}`,{
@@ -31,7 +32,8 @@ const Login = () => {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Etwas ist schief gelaufen!')
+                    setErrMsg("falsches Passwort oder E-Mail")
+                    throw new Error()
                 }
                 return response.text()
             })
@@ -45,7 +47,8 @@ const Login = () => {
         <div>
             <input type={"text"} placeholder={"e-Mail"} value={eMail} onChange={e => setEmail(e.target.value)}/><br/>
             <input type={"text"} placeholder={"password"} value={password} onChange={e => setPassword(e.target.value)}/><br/>
-                <button onClick={login}>Login</button>
+            <button onClick={login}>Login</button>
+            <div>{errMsg}</div>
         </div>
 
     )

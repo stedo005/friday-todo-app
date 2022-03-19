@@ -1,6 +1,7 @@
 package com.example.demo.todoList.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping
-    public UserDetails createUser(@RequestBody UserDetails user) {
+    public String createUser(@RequestBody UserDetails user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userService.createUser(user);
     }
