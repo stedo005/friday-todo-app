@@ -12,7 +12,7 @@ const TodoItem = (props: TodoItemProps) => {
     const token = localStorage.getItem("token")
 
     const deleteItem = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/todo-app/${props.todo.id}`, {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + token
@@ -22,7 +22,7 @@ const TodoItem = (props: TodoItemProps) => {
     }
 
     const setStatusDone = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${props.todo.id}`,{
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/todo-app/${props.todo.id}`,{
             method: "PATCH",
             body: JSON.stringify({
                 "id": props.todo.id,

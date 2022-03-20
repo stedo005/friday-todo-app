@@ -11,7 +11,7 @@ const Registration = () => {
     const navigate = useNavigate()
 
     const createUser = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/users`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/users`, {
             method: "POST",
             body: JSON.stringify({
                 "username": username,

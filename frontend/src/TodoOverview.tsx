@@ -18,7 +18,7 @@ const TodoOverview = () => {
     const token = localStorage.getItem("token")
 
     const fetchAll = useCallback(() => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllItem`,{
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/todo-app/listAllItem`,{
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token
@@ -36,7 +36,7 @@ const TodoOverview = () => {
     }, [t, token])
 
     const listAllDone = useCallback(() => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/listAllDoneItem`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/todo-app/listAllDoneItem`, {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token
@@ -60,7 +60,7 @@ const TodoOverview = () => {
     // Erstellt neues TodoItem
     const addItem = () => {
 
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/todo-app`, {
             method: "POST",
             body: JSON.stringify({
                 "title": titleInput,
@@ -83,7 +83,7 @@ const TodoOverview = () => {
     }
 
     const deleteAllDone = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/deleteAllDone`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/todo-app/deleteAllDone`, {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + token

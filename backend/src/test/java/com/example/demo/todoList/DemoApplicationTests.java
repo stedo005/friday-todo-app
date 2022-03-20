@@ -40,14 +40,14 @@ class DemoApplicationTests {
 		loginData.setUsername("testMail");
 		loginData.setPassword("12345");
 
-		ResponseEntity<String> responseCreateUser = restTemplate.postForEntity("/users", user, String.class);
+		ResponseEntity<String> responseCreateUser = restTemplate.postForEntity("/api/users", user, String.class);
 		assertThat(responseCreateUser.getBody()).isEqualTo("Steve");
 
-		ResponseEntity<String> responseToken = restTemplate.postForEntity("/login", loginData, String.class);
+		ResponseEntity<String> responseToken = restTemplate.postForEntity("/api/login", loginData, String.class);
 		assertThat(responseToken.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		ResponseEntity<TodoItem> addItemResponse = restTemplate.exchange(
-				"/todo-app",
+				"/api/todo-app",
 				HttpMethod.POST,
 				new HttpEntity<>(item1, createHeaders(responseToken.getBody())),
 				TodoItem.class
@@ -57,7 +57,7 @@ class DemoApplicationTests {
 		assertThat(addItemResponse.getBody().getTitle()).isEqualTo("Putzen");
 
 		ResponseEntity<List> listAllItemResponse = restTemplate.exchange(
-				"/todo-app/listAllItem",
+				"/api/todo-app/listAllItem",
 				HttpMethod.GET,
 				new HttpEntity<>(createHeaders(responseToken.getBody())),
 				List.class
@@ -66,7 +66,7 @@ class DemoApplicationTests {
 		assertThat(listAllItemResponse.getBody().size()).isEqualTo(1);
 
 		ResponseEntity<TodoItem> listOneItemResponse = restTemplate.exchange(
-				"/todo-app/" + addItemResponse.getBody().getId(),
+				"/api/todo-app/" + addItemResponse.getBody().getId(),
 				HttpMethod.GET,
 				new HttpEntity<>(createHeaders(responseToken.getBody())),
 				TodoItem.class
@@ -75,7 +75,7 @@ class DemoApplicationTests {
 		assertThat(listOneItemResponse.getBody().getTitle()).isEqualTo("Putzen");
 
 		ResponseEntity<List> listAllDoneItemResponse = restTemplate.exchange(
-				"/todo-app/listAllDoneItem",
+				"/api/todo-app/listAllDoneItem",
 				HttpMethod.GET,
 				new HttpEntity<>(createHeaders(responseToken.getBody())),
 				List.class

@@ -9,7 +9,7 @@ const Login = () => {
     const [errMsg, setErrMsg] = useState('')
 
     const getUser = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/users/${eMail}`,{
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/users/${eMail}`,{
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
@@ -20,7 +20,7 @@ const Login = () => {
     }
 
     const login = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/login`, {
             method: "POST",
             body: JSON.stringify({
                 "username": eMail,

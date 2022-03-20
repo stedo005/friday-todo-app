@@ -8,7 +8,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/todo-app")
+@RequestMapping("/api/todo-app")
 @RequiredArgsConstructor
 public class TodoController {
 

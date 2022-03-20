@@ -22,7 +22,7 @@ const Content = () => {
     const [newTask, setNewTask] = useState('')
 
     const fetchContent = useCallback(() => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/todo-app/${id.todoId}`, {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token
@@ -33,7 +33,7 @@ const Content = () => {
     }, [id.todoId, token])
 
     const changeItem = () => {
-        fetch(`${process.env.REACT_APP_BASE_URL}/todo-app/${id.todoId}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/api/todo-app/${id.todoId}`, {
             method: "PUT",
             body: JSON.stringify({
                 "id": `${contents.id}`,
