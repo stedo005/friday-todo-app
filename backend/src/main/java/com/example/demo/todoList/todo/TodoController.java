@@ -1,4 +1,4 @@
-package com.example.demo.todoList;
+package com.example.demo.todoList.todo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +53,5 @@ public class TodoController {
     public void deleteAllDone(Principal principal) {
         todoService.deleteAllDone(principal);
     }
-
-
 
 }

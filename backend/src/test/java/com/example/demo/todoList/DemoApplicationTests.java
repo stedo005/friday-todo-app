@@ -1,6 +1,7 @@
 package com.example.demo.todoList;
 
 import com.example.demo.todoList.security.LoginData;
+import com.example.demo.todoList.todo.TodoItem;
 import com.example.demo.todoList.user.UserDetails;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

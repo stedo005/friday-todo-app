@@ -1,6 +1,7 @@
-package com.example.demo.todoList;
+package com.example.demo.todoList.todo;
 
-import com.example.demo.todoList.user.UserDetails;
+import com.example.demo.todoList.todo.TodoItem;
+import com.example.demo.todoList.todo.TodoRepository;
 import com.example.demo.todoList.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

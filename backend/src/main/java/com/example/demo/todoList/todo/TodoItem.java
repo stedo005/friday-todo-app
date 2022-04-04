@@ -1,4 +1,4 @@
-package com.example.demo.todoList;
+package com.example.demo.todoList.todo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
